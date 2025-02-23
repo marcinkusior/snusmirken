@@ -15,7 +15,10 @@ const PostsPage = () => {
       {posts && posts.length > 0 ? (
         <ul className="mt-5 flex w-[300px] flex-col justify-center gap-2">
           {posts.map((post) => (
-            <li key={post.id} className="rounded-md border border-gray-300 p-4">
+            <li
+              key={post.id}
+              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
+            >
               <h2>{post.name}</h2>
               <p>Created at: {new Date(post.createdAt).toLocaleString()}</p>
             </li>
