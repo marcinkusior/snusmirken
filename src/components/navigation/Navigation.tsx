@@ -27,6 +27,9 @@ const Navigation = () => {
           <li>
             <Link href="/posts">Posts</Link>
           </li>
+          <li>
+            <Link href="/trips">Trips</Link>
+          </li>
           {/* Add more links as needed */}
         </ul>
 
