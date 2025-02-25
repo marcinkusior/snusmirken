@@ -15,11 +15,16 @@ model Post {
   updatedAt DateTime @updatedAt
   tripId    Int?
   trip      Trip?     @relation(fields: [tripId], references: [id])
+  latitude  Float?
+  longitude Float?
+  userId    String?
+  user      User?      @relation(fields: [userId], references: [id])
 
   @@index([name])
   @@index([tripId])
+  @@index([userId])
 }
-
+  
 model Trip {
   id        Int      @id @default(autoincrement())
   name      String
@@ -28,4 +33,11 @@ model Trip {
   posts     Post[]
 
   @@index([name])
+}
+
+model User {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
 }
