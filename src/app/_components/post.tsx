@@ -1,11 +1,15 @@
 "use client";
 
+import { useUser } from "@clerk/nextjs";
 import { useState } from "react";
 import { api } from "~/trpc/react";
 
 export function LatestPost() {
   const utils = api.useUtils();
   const [name, setName] = useState("");
+
+  const { user } = useUser();
+
   const createPost = api.post.create.useMutation({
     onSuccess: async () => {
       await utils.post.invalidate();
