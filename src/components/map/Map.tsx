@@ -8,7 +8,7 @@ import Map, {
 } from "react-map-gl/maplibre";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { PostFormValues } from "~/app/_types/PostFromValues";
+import { PostFormValues } from "~/app/_types/PostFormValues";
 
 type FlyToCoordinatesFunction = ({
   latitude,

@@ -1,23 +1,26 @@
 import { z } from "zod";
-import { postSchema } from "~/app/_types/PostFromValues";
+import { postSchema } from "~/app/_types/PostFormValues";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
   create: publicProcedure.input(postSchema).mutation(async ({ ctx, input }) => {
+    const timestamp = new Date(input.date).getTime();
+
     return ctx.db.post.create({
       data: {
         name: input.name,
         latitude: input.latitude,
         longitude: input.longitude,
         tripId: input.tripId,
+        date: timestamp,
       },
     });
   }),
 
   getLatest: publicProcedure.query(async ({ ctx }) => {
     const post = await ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
+      orderBy: { date: "desc" },
     });
 
     return post ?? null;
@@ -25,8 +28,8 @@ export const postRouter = createTRPCRouter({
 
   getAll: publicProcedure.query(async ({ ctx }) => {
     const posts = await ctx.db.post.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 10,
+      orderBy: { date: "desc" },
+      take: 30,
     });
 
     return posts;
@@ -39,7 +42,7 @@ export const postRouter = createTRPCRouter({
 
       const posts = await ctx.db.post.findMany({
         where: { tripId: input },
-        orderBy: { createdAt: "desc" },
+        orderBy: { date: "asc" },
       });
 
       return posts;

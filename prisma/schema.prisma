@@ -19,12 +19,14 @@ model Post {
   longitude Float?
   userId    String?
   user      User?      @relation(fields: [userId], references: [id])
+  date      BigInt?
 
   @@index([name])
   @@index([tripId])
   @@index([userId])
+  @@index([date])
 }
-  
+
 model Trip {
   id        Int      @id @default(autoincrement())
   name      String

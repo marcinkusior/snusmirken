@@ -9,6 +9,10 @@ import {
 } from "~/components/map/Map";
 import { api } from "~/trpc/react";
 
+const convertBigIntToDate = (bigintTimestamp) => {
+  return new Date(Number(bigintTimestamp)).toLocaleString();
+};
+
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
     React.useState<FlyToCoordinatesFunction>();
@@ -55,6 +59,7 @@ const TripPage = () => {
               <p>Created at: {new Date(post.createdAt).toLocaleString()}</p>
               <p>Latitude: {post.latitude}</p>
               <p>Longitude: {post.longitude}</p>
+              <p>Date: {convertBigIntToDate(post.date)}</p>
             </li>
           ))}
         </ul>
