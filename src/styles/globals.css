@@ -29,6 +29,10 @@ body {
   }
 }
 
+.maplibregl-map {
+  border-radius: 30px;
+}
+
 /* body::before,
 body::after {
   content: "";
@@ -41,7 +45,7 @@ body::after {
   background-size: 150px 150px;
   opacity: 0.2;
   pointer-events: none;
-  width: 15000px;
+  width: 4500px;
 }
 
 body::before {

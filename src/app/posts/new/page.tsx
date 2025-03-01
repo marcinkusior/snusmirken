@@ -4,17 +4,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "~/trpc/react";
-import * as z from "zod";
 import { useRouter } from "next/navigation";
-
-const postSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  latitude: z.number().optional(),
-  longitude: z.number().optional(),
-  tripId: z.number().optional(),
-});
-
-type PostFormValues = z.infer<typeof postSchema>;
+import { type PostFormValues, postSchema } from "~/app/_types/PostFromValues";
 
 const NewPostForm: React.FC = () => {
   const router = useRouter();
