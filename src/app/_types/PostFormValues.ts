@@ -6,6 +6,7 @@ export const postSchema = z.object({
   latitude: z.number(),
   longitude: z.number(),
   tripId: z.number(),
+  tripFragmentId: z.number(),
   date: z.string(),
 });
 

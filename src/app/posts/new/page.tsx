@@ -12,6 +12,8 @@ const NewPostForm: React.FC = () => {
   const utils = api.useUtils();
 
   const { data: trips, isLoading: isLoadingTrips } = api.trip.getAll.useQuery();
+  const { data: tripFragments, isLoading: isLoadingTripFragments } =
+    api.tripFragment.getAll.useQuery();
 
   const {
     register,
@@ -136,6 +138,32 @@ const NewPostForm: React.FC = () => {
           </select>
           {errors.tripId && (
             <p className="mt-1 text-sm text-red-500">{errors.tripId.message}</p>
+          )}
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="tripFragmentId"
+            className="block text-sm font-medium text-gray-700"
+          >
+            TripFragment
+          </label>
+
+          <select
+            disabled={isLoadingTripFragments}
+            id="tripFragmentId"
+            {...register("tripFragmentId", { valueAsNumber: true })}
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          >
+            {tripFragments?.map((tripFragment) => (
+              <option key={tripFragment.id} value={tripFragment.id}>
+                {tripFragment.name}
+              </option>
+            ))}
+          </select>
+          {errors.tripFragmentId && (
+            <p className="mt-1 text-sm text-red-500">
+              {errors.tripFragmentId.message}
+            </p>
           )}
         </div>
         <button
