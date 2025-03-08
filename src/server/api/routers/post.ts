@@ -1,22 +1,33 @@
 import { z } from "zod";
 import { postSchema } from "~/app/_types/PostFormValues";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  privateProdecure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
-  create: publicProcedure.input(postSchema).mutation(async ({ ctx, input }) => {
-    const timestamp = new Date(input.date).getTime();
+  create: privateProdecure
+    .input(postSchema)
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.auth.userId;
 
-    return ctx.db.post.create({
-      data: {
-        name: input.name,
-        latitude: input.latitude,
-        longitude: input.longitude,
-        tripId: input.tripId,
-        date: timestamp,
-      },
-    });
-  }),
+      console.log("userzzz id", userId);
+
+      const timestamp = new Date(input.date).getTime();
+
+      return ctx.db.post.create({
+        data: {
+          name: input.name,
+          latitude: input.latitude,
+          longitude: input.longitude,
+          tripId: input.tripId,
+          date: timestamp,
+          userId,
+        },
+      });
+    }),
 
   getLatest: publicProcedure.query(async ({ ctx }) => {
     const post = await ctx.db.post.findFirst({

@@ -5,6 +5,7 @@ body {
   position: relative;
   z-index: 0;
   overflow: hidden;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 @keyframes flipBackground {
@@ -30,10 +31,13 @@ body {
 }
 
 .maplibregl-map {
-  border-radius: 30px;
+  border-radius: 5px;
+}
+.maplibregl-ctrl-bottom-right {
+  display: none;
 }
 
-/* body::before,
+body::before,
 body::after {
   content: "";
   position: absolute;
@@ -42,10 +46,13 @@ body::after {
   width: 100%;
   height: 100%;
   background: url("/catso2.png") repeat;
-  background-size: 150px 150px;
+  /* background-size: 150px 150px; */
   opacity: 0.2;
   pointer-events: none;
-  width: 4500px;
+  /* width: 4500px; */
+
+  background-size: 10vw 10vw;
+  width: 100vw;
 }
 
 body::before {
@@ -55,8 +62,21 @@ body::before {
 }
 
 body::after {
-  top: -75px;
-  background-position: 75px 0;
+  top: -5vw;
+  height: calc(100vh + 5vw);
+  background-position: 5vw 0;
   z-index: -2;
   animation: flipBackground 2s infinite;
-} */
+}
+
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.big-font {
+  font-size: 100px;
+  line-height: 80px;
+}

@@ -3,18 +3,19 @@
 import Link from "next/link";
 import React from "react";
 import { api } from "~/trpc/react";
+import Loading from "../_components/loading";
 
 const PostsPage = () => {
   const { data: posts, isLoading, error } = api.post.getAll.useQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <div className="flex flex-col items-center justify-center p-10">
       <Link
         href="/posts/new"
-        className="border-customPurple text-customPurple hover:bg-customPurple mb-5 transform rounded-md border p-5 font-bold transition duration-300 ease-in-out hover:scale-105 hover:text-white"
+        className="mb-5 transform rounded-md border border-customPurple p-5 font-bold text-customPurple transition duration-300 ease-in-out hover:scale-105 hover:bg-customPurple hover:text-white"
       >
         + Create New Post
       </Link>

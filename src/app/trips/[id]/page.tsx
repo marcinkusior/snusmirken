@@ -3,6 +3,7 @@
 import { Post } from "@prisma/client";
 import { useParams } from "next/navigation";
 import React from "react";
+import Loading from "~/app/_components/loading";
 import {
   type FlyToCoordinatesFunction,
   MapComponent,
@@ -33,7 +34,7 @@ const TripPage = () => {
     });
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

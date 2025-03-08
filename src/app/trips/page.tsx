@@ -4,11 +4,12 @@
 import Link from "next/link";
 import React from "react";
 import { api } from "~/trpc/react";
+import Loading from "../_components/loading";
 
 const TripsPage = () => {
   const { data: trips, isLoading, error } = api.trip.getAll.useQuery();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
   return (

@@ -71,8 +71,8 @@ export const FlyToLocation = ({
     ({ latitude, longitude }: { latitude: number; longitude: number }) => {
       map?.flyTo({
         center: [longitude, latitude],
-        zoom: 10,
-        duration: 1000,
+        zoom: 12,
+        duration: 1600,
         curve: 0.84,
         // easing: (t: number): number => {
         //   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -124,7 +124,7 @@ export const MapComponent = ({
           latitude,
           zoom: 14,
         }}
-        style={{ width: 700, height: 400 }}
+        style={{ width: 300, height: 400 }}
         mapStyle="https://tiles.openfreemap.org/styles/positron"
       >
         <AutoFitBounds posts={posts} />
