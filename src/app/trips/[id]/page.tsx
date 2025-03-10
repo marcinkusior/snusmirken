@@ -2,7 +2,7 @@
 
 import { Post } from "@prisma/client";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import Loading from "~/app/_components/loading";
 import { NiceButton } from "~/app/_components/niceButton/NiceButton";
 import {
@@ -18,6 +18,10 @@ const convertBigIntToDate = (bigintTimestamp) => {
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
     React.useState<FlyToCoordinatesFunction>();
+  const [selectedTripFragment, setSelectedTripFragment] = useState<
+    null | number
+  >(null);
+
   const { id: tripId } = useParams();
 
   const {
@@ -55,7 +59,7 @@ const TripPage = () => {
       </div>
 
       {tripFragments?.map((tripFragment) => (
-        <div>
+        <div key={tripFragment.id}>
           <button
             className="m-2 rounded-full border-b-4 border-r-4 border-pink-500 bg-customSalmon px-6 py-2 text-center text-xl leading-8 text-pink-500"
             key={tripFragment.id}
@@ -63,7 +67,12 @@ const TripPage = () => {
             <h2>{tripFragment.name}</h2>
           </button>
 
-          <NiceButton key={tripFragment.id} text={tripFragment.name} />
+          <NiceButton
+            onClick={() => setSelectedTripFragment(tripFragment.id)}
+            key={tripFragment.id}
+            highlight={selectedTripFragment === tripFragment.id}
+            text={tripFragment.name}
+          />
         </div>
       ))}
     </div>
