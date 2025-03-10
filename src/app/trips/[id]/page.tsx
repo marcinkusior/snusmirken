@@ -4,6 +4,7 @@ import { Post } from "@prisma/client";
 import { useParams } from "next/navigation";
 import React from "react";
 import Loading from "~/app/_components/loading";
+import { NiceButton } from "~/app/_components/niceButton/NiceButton";
 import {
   type FlyToCoordinatesFunction,
   MapComponent,
@@ -27,6 +28,11 @@ const TripPage = () => {
     enabled: !!tripId,
   });
 
+  const { data: tripFragments, isLoading: isLoadingTripFragments } =
+    api.tripFragment.getByTripId.useQuery(parseInt(tripId), {
+      enabled: !!tripId,
+    });
+
   const onPostClick = (post: Post) => {
     flyToCoordinates?.({
       latitude: post.latitude,
@@ -48,25 +54,18 @@ const TripPage = () => {
         />
       </div>
 
-      {posts && posts.length > 0 ? (
-        <ul className="flex flex-row space-y-4">
-          {posts.map((post) => (
-            <li
-              key={post.id}
-              className="rounded border p-4 shadow"
-              onClick={() => onPostClick(post)}
-            >
-              <h2 className="text-xl font-semibold">{post.name}</h2>
-              <p>Created at: {new Date(post.createdAt).toLocaleString()}</p>
-              <p>Latitude: {post.latitude}</p>
-              <p>Longitude: {post.longitude}</p>
-              <p>Date: {convertBigIntToDate(post.date)}</p>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No posts available for this trip.</p>
-      )}
+      {tripFragments?.map((tripFragment) => (
+        <div>
+          <button
+            className="m-2 rounded-full border-b-4 border-r-4 border-pink-500 bg-customSalmon px-6 py-2 text-center text-xl leading-8 text-pink-500"
+            key={tripFragment.id}
+          >
+            <h2>{tripFragment.name}</h2>
+          </button>
+
+          <NiceButton key={tripFragment.id} text={tripFragment.name} />
+        </div>
+      ))}
     </div>
   );
 };

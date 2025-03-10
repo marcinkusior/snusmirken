@@ -9,24 +9,26 @@ datasource db {
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  tripId    Int?
-  trip      Trip?     @relation(fields: [tripId], references: [id])
-  latitude  Float?
-  longitude Float?
-  userId    String?
-  user      User?      @relation(fields: [userId], references: [id])
-  date      BigInt?
+  id             Int           @id @default(autoincrement())
+  name           String
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  tripId         Int?
+  trip           Trip?         @relation(fields: [tripId], references: [id])
+  latitude       Float?
+  longitude      Float?
+  userId         String?
+  user           User?         @relation(fields: [userId], references: [id])
+  date           BigInt?
   tripFragmentId Int?
   tripFragment   TripFragment? @relation(fields: [tripFragmentId], references: [id])
+  imageUrl       String?       
 
   @@index([name])
   @@index([tripId])
   @@index([userId])
   @@index([date])
+  @@index([tripFragmentId])
 }
 
 model Trip {

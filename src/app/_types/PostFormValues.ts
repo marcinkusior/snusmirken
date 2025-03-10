@@ -7,7 +7,8 @@ export const postSchema = z.object({
   longitude: z.number(),
   tripId: z.number(),
   tripFragmentId: z.number(),
-  date: z.string(),
+  date: z.string().optional(),
+  imageUrl: z.string().optional(),
 });
 
 export type PostFormValues = z.infer<typeof postSchema>;

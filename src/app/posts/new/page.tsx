@@ -1,15 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { type PostFormValues, postSchema } from "~/app/_types/PostFormValues";
+import { UploadButton } from "~/components/uploadThing/UploadThing";
 
 const NewPostForm: React.FC = () => {
   const router = useRouter();
   const utils = api.useUtils();
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const { data: trips, isLoading: isLoadingTrips } = api.trip.getAll.useQuery();
   const { data: tripFragments, isLoading: isLoadingTripFragments } =
@@ -31,11 +33,11 @@ const NewPostForm: React.FC = () => {
   });
 
   const onSubmit = (data: PostFormValues) => {
-    createPost.mutate(data);
+    createPost.mutate({ ...data, imageUrl: imageUrl });
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex max-h-screen items-center justify-center overflow-scroll">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md rounded bg-white p-6 shadow-md"
@@ -98,7 +100,7 @@ const NewPostForm: React.FC = () => {
           )}
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label
             htmlFor="date"
             className="block text-sm font-medium text-gray-700"
@@ -114,7 +116,7 @@ const NewPostForm: React.FC = () => {
           {errors.date && (
             <p className="mt-1 text-sm text-red-500">{errors.date.message}</p>
           )}
-        </div>
+        </div> */}
 
         <div className="mb-4">
           <label
@@ -166,6 +168,23 @@ const NewPostForm: React.FC = () => {
             </p>
           )}
         </div>
+
+        <div>
+          <UploadButton
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              setImageUrl(res[0]?.ufsUrl);
+              alert("Upload Completed");
+            }}
+            onBeforeUploadBegin={(files) => {
+              console.log("files", files);
+            }}
+            onUploadError={(error: Error) => {
+              alert(`ERROR! ${error.message}`);
+            }}
+          />
+        </div>
+
         <button
           type="submit"
           className="w-full rounded-md bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

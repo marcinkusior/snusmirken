@@ -13,8 +13,6 @@ export const postRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.auth.userId;
 
-      console.log("userzzz id", userId);
-
       const timestamp = new Date(input.date).getTime();
 
       return ctx.db.post.create({
@@ -23,6 +21,8 @@ export const postRouter = createTRPCRouter({
           latitude: input.latitude,
           longitude: input.longitude,
           tripId: input.tripId,
+          tripFragmentId: input.tripFragmentId,
+          imageUrl: input.imageUrl,
           date: timestamp,
           userId,
         },
@@ -49,8 +49,6 @@ export const postRouter = createTRPCRouter({
   getByTripId: publicProcedure
     .input(z.number())
     .query(async ({ ctx, input }) => {
-      console.log("inputzzz", typeof input);
-
       const posts = await ctx.db.post.findMany({
         where: { tripId: input },
         orderBy: { date: "asc" },
