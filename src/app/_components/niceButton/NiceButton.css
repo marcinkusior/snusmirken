@@ -36,6 +36,7 @@
   background: #ec4899;
 }
 .front {
+  border: 1px solid #ec4899;
   display: block;
   position: relative;
   padding: 8px 24px;
@@ -61,7 +62,7 @@
   /* opacity: 0.5; */
 }
 .pushable:active .front {
-  transform: translateY(0px);
+  transform: translateY(0px) translateY(0px);
   transition: transform 50ms;
 }
 

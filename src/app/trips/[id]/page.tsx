@@ -3,6 +3,7 @@
 import { Post } from "@prisma/client";
 import { useParams } from "next/navigation";
 import React, { useState } from "react";
+import { DraggablePost } from "~/app/_components/DraggablePost/DraggablePost";
 import Loading from "~/app/_components/loading";
 import { NiceButton } from "~/app/_components/niceButton/NiceButton";
 import {
@@ -32,6 +33,19 @@ const TripPage = () => {
     enabled: !!tripId,
   });
 
+  const {
+    data: tripFragmentPosts,
+    isLoading: isLoadingTripFragmentPosts,
+    error: errorTripFragmentPosts,
+  } = api.post.getByTripFragmentId.useQuery(
+    parseInt(selectedTripFragment as number),
+    {
+      enabled: !!selectedTripFragment,
+    },
+  );
+
+  console.log(tripFragmentPosts);
+
   const { data: tripFragments, isLoading: isLoadingTripFragments } =
     api.tripFragment.getByTripId.useQuery(parseInt(tripId), {
       enabled: !!tripId,
@@ -47,8 +61,42 @@ const TripPage = () => {
   if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
+  const updatTripFragment = (tripFragmentid: string) => {
+    setSelectedTripFragment((prev) =>
+      prev === tripFragmentid ? null : tripFragmentid,
+    );
+  };
+
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-14">
+      <div className="gap- flex translate-y-[-50%] flex-row gap-[2px]">
+        {tripFragments?.map((tripFragment) => (
+          <NiceButton
+            onClick={() => {
+              updatTripFragment(tripFragment.id);
+            }}
+            key={tripFragment.id}
+            highlight={selectedTripFragment === tripFragment.id}
+            text={tripFragment.name}
+          />
+        ))}
+      </div>
+
+      <div>
+        {isLoadingTripFragmentPosts && <Loading />}
+
+        <div className="flex flex-row gap-3">
+          {tripFragmentPosts?.map((post) => (
+            <div
+              key={post.id}
+              className="flex flex-row gap-3 rounded-md bg-gray-200 p-3"
+            >
+              <DraggablePost onPostClick={onPostClick} post={post} />
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div>
         <MapComponent
           setFlyToCoordinates={setFlyToCoordinates}
@@ -57,24 +105,6 @@ const TripPage = () => {
           longitude={139.55028}
         />
       </div>
-
-      {tripFragments?.map((tripFragment) => (
-        <div key={tripFragment.id}>
-          <button
-            className="m-2 rounded-full border-b-4 border-r-4 border-pink-500 bg-customSalmon px-6 py-2 text-center text-xl leading-8 text-pink-500"
-            key={tripFragment.id}
-          >
-            <h2>{tripFragment.name}</h2>
-          </button>
-
-          <NiceButton
-            onClick={() => setSelectedTripFragment(tripFragment.id)}
-            key={tripFragment.id}
-            highlight={selectedTripFragment === tripFragment.id}
-            text={tripFragment.name}
-          />
-        </div>
-      ))}
     </div>
   );
 };

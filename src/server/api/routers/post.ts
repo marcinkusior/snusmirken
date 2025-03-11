@@ -56,4 +56,15 @@ export const postRouter = createTRPCRouter({
 
       return posts;
     }),
+
+  getByTripFragmentId: publicProcedure
+    .input(z.number())
+    .query(async ({ ctx, input }) => {
+      const posts = await ctx.db.post.findMany({
+        where: { tripFragmentId: input },
+        orderBy: { date: "asc" },
+      });
+
+      return posts;
+    }),
 });

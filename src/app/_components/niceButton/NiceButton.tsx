@@ -13,7 +13,7 @@ export const NiceButton = ({
     <button
       onClick={onClick}
       type="button"
-      className={`pushable ${highlight ? "niceButton--active" : ""}`}
+      className={`pushable text-md ${highlight ? "niceButton--active" : ""}`}
     >
       {/* <span className="shadow"></span> */}
       <span className="edge"></span>
