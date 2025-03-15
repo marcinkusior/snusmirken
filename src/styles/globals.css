@@ -80,3 +80,7 @@ body::after {
   font-size: 100px;
   line-height: 80px;
 }
+
+.user-select-none {
+  user-select: none;
+}

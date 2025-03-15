@@ -7,7 +7,7 @@ const Loading = () => {
         <img
           src="/catso.jpg"
           alt="Loading..."
-          className="animate-spin-slow h-32 w-32"
+          className="h-32 w-32 animate-interval-rotate"
         />
       </div>
       <div className="z-[10]">loading...</div>

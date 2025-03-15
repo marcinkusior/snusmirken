@@ -1,9 +1,11 @@
 "use client";
 
+import { DndContext, useDraggable } from "@dnd-kit/core";
+
 import { Post } from "@prisma/client";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
-import { DraggablePost } from "~/app/_components/DraggablePost/DraggablePost";
+import React, { useRef, useState } from "react";
+import { DraggablePost } from "~/app/_components/DraggablePost";
 import Loading from "~/app/_components/loading";
 import { NiceButton } from "~/app/_components/niceButton/NiceButton";
 import {
@@ -87,12 +89,11 @@ const TripPage = () => {
 
         <div className="flex flex-row gap-3">
           {tripFragmentPosts?.map((post) => (
-            <div
+            <DraggablePost
               key={post.id}
-              className="flex flex-row gap-3 rounded-md bg-gray-200 p-3"
-            >
-              <DraggablePost onPostClick={onPostClick} post={post} />
-            </div>
+              text={post.name}
+              imageUrl={post.imageUrl}
+            />
           ))}
         </div>
       </div>
