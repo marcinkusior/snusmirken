@@ -117,14 +117,14 @@ export const MapComponent = ({
   };
 
   return (
-    <div className="flex justify-center">
+    <div>
       <Map
         initialViewState={{
           longitude,
           latitude,
           zoom: 14,
         }}
-        style={{ width: 300, height: 400 }}
+        style={{ width: 600, height: 600 }}
         mapStyle="https://tiles.openfreemap.org/styles/positron"
       >
         <AutoFitBounds posts={posts} />
