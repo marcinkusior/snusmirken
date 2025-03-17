@@ -33,17 +33,17 @@
     hsl(340deg 100% 32%) 92%,
     hsl(340deg 100% 16%) 100%
   ); */
-  background: #ec4899;
+  background: #3d04fc;
 }
 .front {
-  border: 1px solid #ec4899;
+  border: 2px solid #3d04fc;
   display: block;
   position: relative;
   padding: 8px 24px;
   border-radius: 45px;
-  font-size: 1.25rem;
-  color: #ec4899;
-  background-color: #ffaca1;
+  font-size: 16px;
+  color: #3d04fc;
+  background-color: white;
   will-change: transform;
   transform: translateY(-6px) translateX(-3px);
   transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
@@ -52,8 +52,8 @@
 
 .niceButton--active .front {
   transform: translateY(0px) !important;
-  background-color: #ec4899;
-  color: #ffaca1;
+  background-color: #3d04fc;
+  color: white;
 }
 
 .pushable:hover .front {

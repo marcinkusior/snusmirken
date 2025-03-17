@@ -43,10 +43,10 @@ const getPhotosPositions = (photosQuantity: number) => {
   return result;
 };
 
-import { Post } from "@prisma/client";
+import { Post, TripFragment } from "@prisma/client";
 import { useParams } from "next/navigation";
 import React, { useRef, useState } from "react";
-import { DraggablePost } from "~/app/_components/DraggablePost";
+import { Photo } from "~/app/_components/Photo";
 import Loading from "~/app/_components/loading";
 import { NiceButton } from "~/app/_components/niceButton/NiceButton";
 import {
@@ -56,6 +56,7 @@ import {
 import Navigation from "~/components/navigation/Navigation";
 import { api } from "~/trpc/react";
 import "./tripContainer.css";
+import { Window } from "~/app/_components/window/Window";
 
 const convertBigIntToDate = (bigintTimestamp) => {
   return new Date(Number(bigintTimestamp)).toLocaleString();
@@ -64,9 +65,10 @@ const convertBigIntToDate = (bigintTimestamp) => {
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
     React.useState<FlyToCoordinatesFunction>();
-  const [selectedTripFragment, setSelectedTripFragment] = useState<
-    null | number
-  >(null);
+  const [selectedTripFragment, setSelectedTripFragment] = useState<null | {
+    name: string;
+    id: number;
+  }>(null);
 
   const { id: tripId } = useParams();
 
@@ -83,7 +85,7 @@ const TripPage = () => {
     isLoading: isLoadingTripFragmentPosts,
     error: errorTripFragmentPosts,
   } = api.post.getByTripFragmentId.useQuery(
-    parseInt(selectedTripFragment as number),
+    parseInt(selectedTripFragment?.id as number),
     {
       enabled: !!selectedTripFragment,
     },
@@ -104,9 +106,9 @@ const TripPage = () => {
   if (isLoading) return <Loading />;
   if (error) return <div>Error: {error.message}</div>;
 
-  const updatTripFragment = (tripFragmentid: string) => {
+  const updatTripFragment = (tripFragmentid: TripFragment) => {
     setSelectedTripFragment((prev) =>
-      prev === tripFragmentid ? null : tripFragmentid,
+      prev?.id === tripFragmentid.id ? null : tripFragmentid,
     );
   };
 
@@ -114,45 +116,58 @@ const TripPage = () => {
 
   return (
     <>
-      <div className="mx-auto h-[100vh] p-14">
-        <div className="flex translate-y-[-50%] flex-row gap-[2px]">
+      <div className="mx-auto h-[100vh]">
+        <div className="absolute left-10 top-10 flex translate-y-[-50%] flex-row gap-[2px]">
           {tripFragments?.map((tripFragment) => (
             <NiceButton
               onClick={() => {
-                updatTripFragment(tripFragment.id);
+                updatTripFragment(tripFragment);
               }}
               key={tripFragment.id}
-              highlight={selectedTripFragment === tripFragment.id}
+              highlight={selectedTripFragment?.id === tripFragment.id}
               text={tripFragment.name}
             />
           ))}
         </div>
 
-        <div className="flex-column flex gap-3">
-          <div id="trip-container" className="relative flex h-[80vh] flex-grow">
-            {isLoadingTripFragmentPosts && <Loading />}
+        <Window
+          title="Map"
+          defaultPosition={{ x: 50, y: 100 }}
+          defaultSize={{ width: 400, height: 440 }}
+        >
+          <MapComponent
+            setFlyToCoordinates={setFlyToCoordinates}
+            posts={posts}
+            latitude={35.30889}
+            longitude={139.55028}
+          />
+        </Window>
+        {selectedTripFragment && (
+          <Window
+            defaultPosition={{ x: 520, y: 100 }}
+            defaultSize={{ width: 900, height: 600 }}
+            title={selectedTripFragment?.name}
+            onClose={() => setSelectedTripFragment(null)}
+          >
+            <div
+              id="trip-container"
+              className="relative flex h-[70vh] flex-grow"
+            >
+              {isLoadingTripFragmentPosts && <Loading />}
 
-            <div className="relative flex flex-row flex-wrap gap-10 overflow-y-scroll">
-              {tripFragmentPosts?.map((post, index) => (
-                <DraggablePost
-                  key={post.id}
-                  text={post.name}
-                  imageUrl={post.imageUrl}
-                  index={index}
-                  initialPosition={photoPositions[index]}
-                />
-              ))}
+              <div className="relative flex flex-row flex-wrap gap-10 overflow-y-scroll">
+                {tripFragmentPosts?.map((post, index) => (
+                  <Photo
+                    key={post.id}
+                    text={post.name}
+                    imageUrl={post.imageUrl}
+                    index={index}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="frame">
-            <MapComponent
-              setFlyToCoordinates={setFlyToCoordinates}
-              posts={posts}
-              latitude={35.30889}
-              longitude={139.55028}
-            />
-          </div>
-        </div>
+          </Window>
+        )}
       </div>
     </>
   );

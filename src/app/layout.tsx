@@ -1,4 +1,5 @@
 import "~/styles/globals.css";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import { Poppins, Cherry_Bomb_One } from "next/font/google";
 import { type Metadata, Viewport } from "next";
 import { TRPCReactProvider } from "~/trpc/react";

@@ -117,61 +117,59 @@ export const MapComponent = ({
   };
 
   return (
-    <div>
-      <Map
-        initialViewState={{
-          longitude,
-          latitude,
-          zoom: 14,
-        }}
-        style={{ width: 600, height: 600 }}
-        mapStyle="https://tiles.openfreemap.org/styles/positron"
-      >
-        <AutoFitBounds posts={posts} />
-        <FlyToLocation setFlyToCoordinates={setFlyToCoordinates} />
+    <Map
+      initialViewState={{
+        longitude,
+        latitude,
+        zoom: 14,
+      }}
+      style={{ width: 360, height: 360 }}
+      mapStyle="https://tiles.openfreemap.org/styles/positron"
+    >
+      <AutoFitBounds posts={posts} />
+      <FlyToLocation setFlyToCoordinates={setFlyToCoordinates} />
 
-        <Source id="line-source" type="geojson" data={geojson}>
-          <Layer
-            id="line-layer"
-            type="line"
-            source="line-source"
-            layout={{
-              "line-join": "round",
-              "line-cap": "round",
-            }}
-            paint={{
-              "line-color": "salmon",
-              "line-width": 4,
-            }}
-          />
-        </Source>
+      <Source id="line-source" type="geojson" data={geojson}>
+        <Layer
+          id="line-layer"
+          type="line"
+          source="line-source"
+          layout={{
+            "line-join": "round",
+            "line-cap": "round",
+          }}
+          paint={{
+            "line-color": "salmon",
+            "line-width": 4,
+          }}
+        />
+      </Source>
 
-        {posts.map((post, index) => (
-          <Marker
-            key={index}
-            longitude={post.longitude}
-            latitude={post.latitude}
-            onClick={() => setSelectedPost(index)}
-          >
-            {markerSvg}
+      {posts.map((post, index) => (
+        <Marker
+          key={index}
+          longitude={post.longitude}
+          latitude={post.latitude}
+          onClick={() => setSelectedPost(index)}
+        >
+          {markerSvg}
 
-            {selectedPost === index && (
-              <Popup
-                latitude={post.latitude!}
-                longitude={post.longitude!}
-                onClose={() => setSelectedPost(null)}
-                closeOnClick={false}
-              >
-                <div>
-                  <h3>{post.name}</h3>
-                  <p>Latitude: {post.latitude}</p>
-                  <p>Longitude: {post.longitude}</p>
-                </div>
-              </Popup>
-            )}
-          </Marker>
-        ))}
-      </Map>
-    </div>
+          {selectedPost === index && (
+            <Popup
+              latitude={post.latitude!}
+              longitude={post.longitude!}
+              onClose={() => setSelectedPost(null)}
+              closeOnClick={false}
+            >
+              <div>
+                <h3>{post.name}</h3>
+                <p>Latitude: {post.latitude}</p>
+                <p>Longitude: {post.longitude}</p>
+              </div>
+            </Popup>
+          )}
+        </Marker>
+      ))}
+    </Map>
   );
 };

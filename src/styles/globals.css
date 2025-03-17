@@ -6,7 +6,7 @@ body {
   z-index: 0;
   overflow: hidden;
   font-family: var(--font-poppins), sans-serif;
-  background: #f8d0e5;
+  background: #fce2f0;
 }
 
 @keyframes flipBackground {
@@ -84,13 +84,4 @@ body::after {
 
 .user-select-none {
   user-select: none;
-}
-
-.frame {
-  border: 2px solid #ec4899;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: #ec4899 4.8px 4.8px 0px 0px;
-  background: white;
-  /* box-shadow: rgb(13, 19, 19) 4.8px 4.8px 0px 0px; */
 }

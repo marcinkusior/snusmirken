@@ -12,7 +12,8 @@ export default {
         customPurple: "#cc66ff",
         customSalmon: "#ffaba1",
         customOrange: "#ffaca1",
-        customPink: "#3d04fc",
+        customPink: "#fce2f0",
+        niceBlue: "#3d04fc",
       },
       animation: {
         "interval-rotate":

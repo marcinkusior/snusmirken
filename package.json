@@ -24,6 +24,9 @@
   "dependencies": {
     "@clerk/nextjs": "^6.12.0",
     "@dnd-kit/core": "^6.3.1",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "@hookform/resolvers": "^4.1.2",
     "@prisma/client": "^5.14.0",
     "@t3-oss/env-nextjs": "^0.10.1",
@@ -31,6 +34,7 @@
     "@trpc/client": "^11.0.0-rc.446",
     "@trpc/react-query": "^11.0.0-rc.446",
     "@trpc/server": "^11.0.0-rc.446",
+    "@uidotdev/usehooks": "^2.4.1",
     "@uploadthing/react": "^7.3.0",
     "framer-motion": "^12.5.0",
     "geist": "^1.3.0",
