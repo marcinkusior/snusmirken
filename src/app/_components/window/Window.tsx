@@ -6,8 +6,9 @@ import { useDebounce } from "@uidotdev/usehooks";
 import {
   faWindowMinimize,
   faXmark,
-  faExpand,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
+import { faWindowMaximize } from "@fortawesome/free-regular-svg-icons";
 
 let zIndexCounter = 1;
 
@@ -118,8 +119,8 @@ export const Window = ({
           zIndexCounter++;
         }}
         ref={windowRef}
-        className={`window fixed overflow-hidden ${
-          isTransitionActive ? "transition-all duration-300" : ""
+        className={`window fixed ${
+          isTransitionActive ? "transition-all duration-300 ease-in-out" : ""
         }`}
         style={{
           width: size.width,
@@ -130,29 +131,30 @@ export const Window = ({
       >
         {/* Window Title Bar */}
         <div
-          className="bg-niceBlue flex h-10 cursor-move items-center justify-between px-4 text-white"
+          className="bg-prettyBlue flex h-10 cursor-move items-center justify-between px-4 text-white"
           onMouseDown={handleDragStart}
+          onDoubleClick={handleMaximize}
         >
           <span className="truncate font-semibold">{title}</span>
           <div className="window-controls flex items-center space-x-2">
             <FontAwesomeIcon
               onClick={handleMinimize}
               icon={faWindowMinimize}
-              className="cursor-pointer"
+              className="cursor-pointer hover:opacity-70"
               size="lg"
             />
 
             <FontAwesomeIcon
               onClick={handleMaximize}
-              icon={faExpand}
-              className="cursor-pointer"
+              icon={faWindowMaximize}
+              className="cursor-pointer hover:opacity-70"
               size="lg"
             />
 
             <FontAwesomeIcon
               onClick={handleClose}
               icon={faXmark}
-              className="cursor-pointer"
+              className="cursor-pointer hover:opacity-70"
               size="xl"
             />
           </div>
@@ -169,7 +171,12 @@ export const Window = ({
             className="absolute bottom-0 right-0 h-4 w-4 cursor-se-resize"
             onMouseDown={handleResizeStart}
           >
-            <div className="absolute bottom-1 right-1 h-2 w-2 rounded-sm bg-gray-400" />
+            {/* <div className="absolute bottom-1 right-1 h-2 w-2 rounded-sm bg-gray-400" /> */}
+            <FontAwesomeIcon
+              icon={faPlus}
+              className="absolute bottom-1 right-1 text-gray-400"
+              size="sm"
+            />
           </div>
         )}
       </div>

@@ -1,48 +1,5 @@
 "use client";
 
-const getPhotosPositions = (photosQuantity: number) => {
-  const container = document.getElementById("trip-container");
-  if (!container) return;
-
-  const containerWidth = container.clientWidth;
-  const containerHeight = container.clientHeight;
-
-  // Calculate the number of rows and columns for an even distribution
-  const numCols = 5;
-  const numRows = 1;
-  const cellWidth = containerWidth / numCols;
-  const cellHeight = containerHeight / numRows;
-
-  // Calculate padding to keep photos away from edges
-  const paddingX = cellWidth * 0.2;
-  const paddingY = cellHeight * 0.2;
-
-  const result = [];
-
-  for (let index = 0; index < photosQuantity; index++) {
-    // Determine the cell position (zigzag pattern)
-    let row = Math.floor(index / numCols);
-    let col = index % numCols;
-
-    // Offset even rows to create a zigzag pattern
-    if (row % 2 === 1) {
-      col = numCols - 1 - col;
-    }
-
-    // Calculate base position within the cell
-    const baseX = cellWidth * col + paddingX;
-    const baseY = cellHeight * row + paddingY;
-
-    // Add slight randomness while keeping photos within their cells
-    const randomX = (Math.random() - 0.5) * (cellWidth - paddingX * 2) * 0.5;
-    const randomY = (Math.random() - 0.5) * (cellHeight - paddingY * 2) * 0.5;
-
-    result.push({ x: baseX + randomX, y: baseY + randomY });
-  }
-
-  return result;
-};
-
 import { Post, TripFragment } from "@prisma/client";
 import { useParams } from "next/navigation";
 import React, { useRef, useState } from "react";
@@ -53,14 +10,9 @@ import {
   type FlyToCoordinatesFunction,
   MapComponent,
 } from "~/components/map/Map";
-import Navigation from "~/components/navigation/Navigation";
 import { api } from "~/trpc/react";
 import "./tripContainer.css";
 import { Window } from "~/app/_components/window/Window";
-
-const convertBigIntToDate = (bigintTimestamp) => {
-  return new Date(Number(bigintTimestamp)).toLocaleString();
-};
 
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
@@ -69,6 +21,7 @@ const TripPage = () => {
     name: string;
     id: number;
   }>(null);
+  const [isMapOpen, setIsMapOpen] = useState(true);
 
   const { id: tripId } = useParams();
 
@@ -112,12 +65,20 @@ const TripPage = () => {
     );
   };
 
-  const photoPositions = getPhotosPositions(posts.length);
-
   return (
     <>
       <div className="mx-auto h-[100vh]">
         <div className="absolute left-10 top-10 flex translate-y-[-50%] flex-row gap-[2px]">
+          <div className="pr-10">
+            <NiceButton
+              onClick={() => {
+                setIsMapOpen((prev) => !prev);
+              }}
+              highlight={isMapOpen}
+              text="Map"
+            />
+          </div>
+
           {tripFragments?.map((tripFragment) => (
             <NiceButton
               onClick={() => {
@@ -130,22 +91,26 @@ const TripPage = () => {
           ))}
         </div>
 
-        <Window
-          title="Map"
-          defaultPosition={{ x: 50, y: 100 }}
-          defaultSize={{ width: 400, height: 440 }}
-        >
-          <MapComponent
-            setFlyToCoordinates={setFlyToCoordinates}
-            posts={posts}
-            latitude={35.30889}
-            longitude={139.55028}
-          />
-        </Window>
+        {isMapOpen && (
+          <Window
+            title="Map"
+            defaultPosition={{ x: 35, y: 100 }}
+            defaultSize={{ width: 400, height: 440 }}
+            onClose={() => setIsMapOpen(false)}
+          >
+            <MapComponent
+              setFlyToCoordinates={setFlyToCoordinates}
+              posts={posts}
+              latitude={35.30889}
+              longitude={139.55028}
+            />
+          </Window>
+        )}
+
         {selectedTripFragment && (
           <Window
-            defaultPosition={{ x: 520, y: 100 }}
-            defaultSize={{ width: 900, height: 600 }}
+            defaultPosition={{ x: 460, y: 100 }}
+            defaultSize={{ width: 1100, height: 600 }}
             title={selectedTripFragment?.name}
             onClose={() => setSelectedTripFragment(null)}
           >

@@ -15,22 +15,13 @@ export const Photo = ({
   imageUrl: string;
   index?: number;
 }) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const dragOffset = useRef({ x: 0, y: 0 });
-
-  const [positionX, setPositionX] = useState(() => getRandomNumber(2000, 3000));
-  const [potisitionY, setPositionY] = useState(() => getRandomNumber(0, 500));
-  const [tilt, setTilt] = useState(0);
-
   return (
     <div>
       <div
-        className={`user-select-none draggable-post w-[400px] overflow-hidden ${
-          isDragging ? "shadow-xl" : ""
-        }`}
+        className={`user-select-none draggable-post w-[400px] overflow-hidden`}
       >
         <div className="flex flex-col items-start justify-between gap-2">
-          <p className="text-customPink flex-1 p-1">{text}</p>
+          <p className="text-prettyBlue flex-1 p-1">{text}</p>
 
           <div className="relative">
             <img src={imageUrl} alt="" />

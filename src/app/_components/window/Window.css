@@ -1,12 +1,16 @@
 .window {
   border: 3px solid #3d04fc;
   border-radius: 5px;
-  box-shadow: #825df7 4.8px 4.8px 0px 0px;
+  box-shadow:
+    #825df7 4.8px 4.8px 0px 0px,
+    #fce2f0dd -1.2px -1.2px 0px 0px;
   background: white;
   /* box-shadow: rgb(13, 19, 19) 4.8px 4.8px 0px 0px; */
   position: absolute;
-}
-
-.window-wrapper {
-  border-left: 4px solid #fce2f0;
+  background-image: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.119) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
 }
