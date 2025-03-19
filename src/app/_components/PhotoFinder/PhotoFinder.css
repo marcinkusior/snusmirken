@@ -1,0 +1,18 @@
+.photo-finder-grid {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  grid-template-rows: 1fr 100px;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  gap: 10px;
+}
+
+.photo-finder-grid__main {
+  grid-area: 1 / 1 / 2 / 2;
+}
+.photo-finder-grid__sidebar {
+  grid-area: 1 / 2 / 3 / 3;
+}
+.photo-finder-grid__selection {
+  grid-area: 2 / 1 / 3 / 2;
+}

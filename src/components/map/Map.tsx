@@ -5,10 +5,13 @@ import Map, {
   Source,
   Layer,
   useMap,
+  MapRef,
 } from "react-map-gl/maplibre";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { PostFormValues } from "~/app/_types/PostFormValues";
+import { useRef } from "react";
+import { map } from "zod";
 
 type FlyToCoordinatesFunction = ({
   latitude,
@@ -100,6 +103,9 @@ export const MapComponent = ({
   posts: PostFormValues[];
   setFlyToCoordinates: (flyToCoordinate: FlyToCoordinatesFunction) => void;
 }) => {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const mapRef = useRef<MapRef | null>(null);
+
   const [selectedPost, setSelectedPost] = React.useState<number | null>(null);
   const lineCoordinates = posts.map((post) => [post.longitude, post.latitude]);
 
@@ -118,12 +124,13 @@ export const MapComponent = ({
 
   return (
     <Map
+      ref={mapRef}
       initialViewState={{
         longitude,
         latitude,
         zoom: 14,
       }}
-      style={{ width: 360, height: 360 }}
+      style={{ width: "100%", height: "100%" }}
       mapStyle="https://tiles.openfreemap.org/styles/positron"
     >
       <AutoFitBounds posts={posts} />

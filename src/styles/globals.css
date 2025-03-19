@@ -1,6 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+root {
+  --primary-color: #3d04fc;
+  --background-color: #fce2f0dd;
+  --shadow-color: #825df7;
+}
+
 body {
   position: relative;
   z-index: 0;
@@ -35,7 +42,7 @@ body {
   border-radius: 5px;
 }
 .maplibregl-ctrl-bottom-right {
-  display: none;
+  /* display: none; */
 }
 
 body::before,
@@ -85,5 +92,9 @@ body::after {
 }
 
 .user-select-none {
+  user-select: none;
+}
+
+* {
   user-select: none;
 }

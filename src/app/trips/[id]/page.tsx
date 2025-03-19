@@ -13,6 +13,7 @@ import {
 import { api } from "~/trpc/react";
 import "./tripContainer.css";
 import { Window } from "~/app/_components/window/Window";
+import { PhotoFinder } from "~/app/_components/PhotoFinder/PhotoFinder";
 
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
@@ -110,11 +111,16 @@ const TripPage = () => {
         {selectedTripFragment && (
           <Window
             defaultPosition={{ x: 460, y: 100 }}
-            defaultSize={{ width: 1100, height: 600 }}
+            defaultSize={{ width: 900, height: 600 }}
             title={selectedTripFragment?.name}
             onClose={() => setSelectedTripFragment(null)}
           >
-            <div
+            <PhotoFinder
+              posts={tripFragmentPosts as Post[]}
+              isLoading={isLoadingTripFragmentPosts}
+            />
+
+            {/* <div
               id="trip-container"
               className="relative flex h-[70vh] flex-grow"
             >
@@ -130,7 +136,7 @@ const TripPage = () => {
                   />
                 ))}
               </div>
-            </div>
+            </div> */}
           </Window>
         )}
       </div>

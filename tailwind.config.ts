@@ -9,7 +9,7 @@ export default {
         sans: ["var(--font-geist-sans)", ...fontFamily.sans],
       },
       colors: {
-        customPurple: "#cc66ff",
+        nicePurple: "#825df7",
         customSalmon: "#ffaba1",
         customOrange: "#ffaca1",
         customPink: "#fce2f0",
