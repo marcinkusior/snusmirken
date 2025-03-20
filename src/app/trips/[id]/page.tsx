@@ -14,6 +14,7 @@ import { api } from "~/trpc/react";
 import "./tripContainer.css";
 import { Window } from "~/app/_components/window/Window";
 import { PhotoFinder } from "~/app/_components/PhotoFinder/PhotoFinder";
+import { Taskbar } from "~/app/_components/Taskbar/Taskbar";
 
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
@@ -140,6 +141,7 @@ const TripPage = () => {
           </Window>
         )}
       </div>
+      <Taskbar />
     </>
   );
 };
