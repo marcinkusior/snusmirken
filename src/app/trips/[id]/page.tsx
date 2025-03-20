@@ -15,6 +15,8 @@ import "./tripContainer.css";
 import { Window } from "~/app/_components/window/Window";
 import { PhotoFinder } from "~/app/_components/PhotoFinder/PhotoFinder";
 import { Taskbar } from "~/app/_components/Taskbar/Taskbar";
+import { DesktopIcon } from "~/app/_components/DesktopIcon/DesktopIcon";
+import { Folder } from "lucide-react";
 
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
@@ -69,7 +71,12 @@ const TripPage = () => {
 
   return (
     <>
-      <div className="mx-auto h-[100vh]">
+      <div
+        onDragOver={(e) => {
+          e.preventDefault();
+        }}
+        className="mx-auto h-[100vh]"
+      >
         <div className="absolute left-10 top-10 flex translate-y-[-50%] flex-row gap-[2px]">
           <div className="pr-10">
             <NiceButton
@@ -92,6 +99,14 @@ const TripPage = () => {
             />
           ))}
         </div>
+
+        <DesktopIcon
+          onDoubleClick={() => {
+            setSelectedTripFragment(tripFragments[0]);
+          }}
+          icon={<Folder size={60} strokeWidth={1.5} fill="white" />}
+          label="Tokyo"
+        />
 
         {isMapOpen && (
           <Window

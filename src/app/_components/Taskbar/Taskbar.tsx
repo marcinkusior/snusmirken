@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from "react";
 
 function MenuItem({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <div className="flex cursor-pointer items-center gap-3 rounded p-2 hover:bg-[#316AC5] hover:text-white">
+    <div className="hover:bg-prettyBlue flex cursor-pointer items-center gap-3 rounded p-2 hover:text-white">
       {icon}
       <span>{label}</span>
     </div>
@@ -55,10 +55,10 @@ export const Taskbar = () => {
       {isStartMenuOpen && (
         <div
           ref={startMenuRef}
-          className="absolute bottom-[63px] left-0 z-[99999] w-80 rounded-tr-lg border-2 border-[#0A246A] bg-[#ECE9D8] shadow-xl"
+          className="border-prettyBlue absolute bottom-[63px] left-0 z-[99999] w-80 rounded-tr-lg border-2 bg-white shadow-xl"
         >
           {/* User Profile Section */}
-          <div className="flex items-center gap-4 bg-[#225FD7] p-4">
+          <div className="bg-prettyBlue flex items-center gap-4 p-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white">
               <img
                 src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=100&h=100"
