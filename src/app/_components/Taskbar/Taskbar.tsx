@@ -11,11 +11,13 @@ import {
   FileText,
   Calendar,
 } from "lucide-react";
+import cx from "classnames";
+
 import { useEffect, useRef, useState } from "react";
 
 function MenuItem({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <div className="hover:bg-prettyBlue flex cursor-pointer items-center gap-3 rounded p-2 hover:text-white">
+    <div className="flex cursor-pointer items-center gap-3 rounded rounded-[20px] p-2 hover:bg-prettyBlue hover:text-white">
       {icon}
       <span>{label}</span>
     </div>
@@ -55,10 +57,10 @@ export const Taskbar = () => {
       {isStartMenuOpen && (
         <div
           ref={startMenuRef}
-          className="border-prettyBlue absolute bottom-[63px] left-0 z-[99999] w-80 rounded-tr-lg border-2 bg-white shadow-xl"
+          className="absolute bottom-[86px] left-[1.5vw] z-[99999] w-80 overflow-hidden rounded-[20px] rounded-tr-lg border-2 border-prettyBlue bg-white shadow-xl"
         >
           {/* User Profile Section */}
-          <div className="bg-prettyBlue flex items-center gap-4 p-4">
+          <div className="flex items-center gap-4 border-b-[2px] border-prettyBlue bg-white p-4 text-prettyBlue">
             <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white">
               <img
                 src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=100&h=100"
@@ -66,7 +68,7 @@ export const Taskbar = () => {
                 className="h-10 w-10 rounded-full"
               />
             </div>
-            <span className="font-semibold text-white">User Name</span>
+            <span className="font-semibold">User Name</span>
           </div>
 
           {/* Menu Items */}
@@ -87,17 +89,24 @@ export const Taskbar = () => {
           </div>
         </div>
       )}
-      <div className="bg-prettyBlue absolute bottom-[23px] flex h-10 w-full items-center justify-between px-1">
+      <div className="shadow-bl absolute bottom-[36px] left-[1vw] flex h-[46px] w-[98vw] items-center justify-between rounded-[40px] border-[2px] border-prettyBlue bg-white pb-1 pl-1 pr-3 pt-1">
         <button
           ref={startButtonRef}
           onClick={() => setIsStartMenuOpen(!isStartMenuOpen)}
-          className={`bg-prettyBlue br-2 flex items-center gap-2 rounded border-white px-2 py-1 text-white`}
+          className={`br-2 flex items-center gap-2 rounded border-white px-2 py-1 text-prettyBlue`}
         >
-          <span className="font-bold">Start</span>
+          <span
+            className={cx(
+              "p bold rounded-[19px] border-2 border-transparent p-[3px] pl-3 pr-3 text-sm",
+              isStartMenuOpen ? "bg-prettyBlue text-white" : "",
+            )}
+          >
+            Start
+          </span>
         </button>
 
         {/* System Tray */}
-        <div className="flex items-center gap-2 bg-[#ECE9D8] px-2 py-1">
+        <div className="flex items-center gap-2 px-2 py-1">
           <span className="text-sm">{currentTime}</span>
         </div>
       </div>

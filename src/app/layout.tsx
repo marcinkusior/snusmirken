@@ -1,6 +1,6 @@
 import "~/styles/globals.css";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-import { Poppins, Cherry_Bomb_One } from "next/font/google";
+import { Poppins, Offside, Jersey_25, Space_Mono } from "next/font/google";
 import { type Metadata, Viewport } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -11,11 +11,11 @@ const poppins = Poppins({
   display: "swap",
 });
 
-const cherryBombOne = Cherry_Bomb_One({
+const font = Space_Mono({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "700"],
   display: "swap",
-  variable: "--font-cherry-bomb-one",
+  variable: "--font-potta-one",
 });
 
 export const metadata: Metadata = {
@@ -34,7 +34,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${cherryBombOne.className}`}>
+      <html
+        lang="en"
+        // className={`${poppins.className}`}
+
+        className={`${font.className}`}
+      >
         <body className="min-h-screen text-gray-700">
           <TRPCReactProvider>{children}</TRPCReactProvider>
         </body>

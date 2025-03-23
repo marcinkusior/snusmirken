@@ -98,3 +98,7 @@ body::after {
 * {
   user-select: none;
 }
+
+.bold {
+  font-weight: 700;
+}

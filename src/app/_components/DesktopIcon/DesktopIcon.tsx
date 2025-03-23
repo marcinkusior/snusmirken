@@ -52,7 +52,7 @@ export const DesktopIcon: React.FC<DesktopIconProps> = ({
 
   return (
     <div
-      className={`hover:bg-nicePurple/10 hover:border-nicePurple/50 absolute flex cursor-move select-none flex-col items-center gap-1 rounded-lg border-2 border-transparent p-2 ${isDragging ? "opacity-50" : ""} `}
+      className={`absolute flex cursor-move select-none flex-col items-center rounded-lg border-2 border-transparent p-2 hover:border-nicePurple/50 hover:bg-nicePurple/10 ${isDragging ? "opacity-50" : ""} `}
       style={{
         left: position.x,
         top: position.y,

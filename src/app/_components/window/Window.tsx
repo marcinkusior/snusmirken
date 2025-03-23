@@ -119,7 +119,7 @@ export const Window = ({
         zIndexCounter++;
       }}
       ref={windowRef}
-      className={`window fixed ${
+      className={`window fixed overflow-hidden rounded-[22px] ${
         isTransitionActive ? "transition-all duration-300 ease-in-out" : ""
       }`}
       style={{
@@ -129,13 +129,12 @@ export const Window = ({
         zIndex: zIndexCounter,
       }}
     >
-      {/* Window Title Bar */}
       <div
-        className="bg-prettyBlue flex h-10 cursor-move items-center justify-between px-4 text-white"
+        className="flex h-10 cursor-move items-center justify-between border-b-[4px] border-prettyBlue bg-white px-4 text-prettyBlue"
         onMouseDown={handleDragStart}
         onDoubleClick={handleMaximize}
       >
-        <span className="truncate font-semibold">{title}</span>
+        <span className="truncate font-bold">{title}</span>
         <div className="window-controls flex items-center space-x-2">
           <FontAwesomeIcon
             onClick={handleMinimize}
