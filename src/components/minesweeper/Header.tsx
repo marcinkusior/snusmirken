@@ -26,8 +26,8 @@ const Header: React.FC<HeaderProps> = memo(
     };
 
     return (
-      <div className="flex items-center justify-between border-b-[3px] border-l-[3px] border-r-[3px] border-t-[3px] border-[#808080] border-b-[#ffffff] border-r-[#ffffff] bg-[#c0c0c0] p-2">
-        <div className="bg-black px-2 py-1 font-['Digital'] text-2xl text-red-600">
+      <div className="flex items-center justify-between bg-white">
+        <div className="border-[3px] border-prettyBlue px-2 py-1 text-2xl text-prettyBlue">
           {formatNumber(mineCount)}
         </div>
         <button
@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = memo(
         >
           {getFaceEmoji()}
         </button>
-        <div className="bg-black px-2 py-1 font-['Digital'] text-2xl text-red-600">
+        <div className="border-[3px] border-prettyBlue px-2 py-1 text-2xl text-prettyBlue">
           {formatNumber(Math.min(timeElapsed, 999))}
         </div>
       </div>

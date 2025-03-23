@@ -85,8 +85,8 @@ export const Minesweeper = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="border-b-[3px] border-l-[3px] border-r-[3px] border-t-[3px] border-[#ffffff] border-b-[#808080] border-r-[#808080]">
-        <div className="bg-[#c0c0c0] p-2">
+      <div className="border-b-[3px] border-l-[3px] border-r-[3px] border-t-[3px] border-white">
+        <div className="bg-white p-2">
           <Header
             mineCount={mineCount}
             timeElapsed={timeElapsed}
