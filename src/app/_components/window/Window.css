@@ -17,3 +17,7 @@
 .shadow-bl {
   box-shadow: #3d04fc 5.8px 5.8px 0px 0px;
 }
+
+.shadow-sm {
+  box-shadow: #3d04fc 1 1 0px 0px;
+}

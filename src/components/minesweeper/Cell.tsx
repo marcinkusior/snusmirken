@@ -9,24 +9,21 @@ interface CellProps {
 }
 
 const numberColors = {
-  1: "text-blue-600",
-  2: "text-green-600",
-  3: "text-red-600",
-  4: "text-blue-900",
-  5: "text-red-900",
-  6: "text-teal-600",
-  7: "text-black",
-  8: "text-gray-600",
+  1: "text-prettyBlue",
+  2: "text-prettyBlue",
+  3: "text-prettyBlue",
+  4: "text-prettyBlue",
+  5: "text-prettyBlue",
+  6: "text-prettyBlue",
+  7: "text-prettyBlue",
+  8: "text-prettyBlue",
 };
 
 const Cell: React.FC<CellProps> = memo(({ cell, onClick, onRightClick }) => {
   const getCellContent = () => {
-    if (cell.isFlagged) {
-      return <Flag size={14} className="text-red-600" />;
-    }
     if (cell.isRevealed) {
       if (cell.isMine) {
-        return <Bomb size={14} />;
+        return <Bomb size={14} strokeWidth={3} className="text-" />;
       }
       if (cell.neighborMines > 0) {
         return (
@@ -40,12 +37,17 @@ const Cell: React.FC<CellProps> = memo(({ cell, onClick, onRightClick }) => {
         );
       }
     }
+
+    if (cell.isFlagged) {
+      return <Flag size={14} strokeWidth={3} className="text-prettyBlue" />;
+    }
+
     return null;
   };
 
   const cellStyle = cell.isRevealed
-    ? "w-6 h-6 flex items-center justify-center bg-[#c0c0c0] border border-[#808080] text-sm font-bold"
-    : "w-6 h-6 flex items-center justify-center bg-[#c0c0c0] border-t-[3px] border-l-[3px] border-[#ffffff] border-r-[3px] border-b-[3px] border-r-[#808080] border-b-[#808080] text-sm font-bold";
+    ? "w-7 h-7 flex items-center border-[1px] border-prettyBlue/25 justify-center bg-white rounded-[5px] text-sm font-bold"
+    : "w-7 h-7 flex items-center border-[1px] shadow-sm border-prettyBlue justify-center bg-prettyBlue/10 rounded-[5px] text-sm font-bold";
 
   return (
     <button

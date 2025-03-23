@@ -10,7 +10,7 @@ export default {
       },
       colors: {
         nicePurple: "#825df7",
-        customSalmon: "#ffaba1",
+        customSalmon: "rgb(237 110 110)",
         customOrange: "#ffaca1",
         customPink: "#fce2f0",
         prettyBlue: "#3d04fc",

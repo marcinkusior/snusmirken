@@ -102,3 +102,18 @@ body::after {
 .bold {
   font-weight: 700;
 }
+
+@keyframes expand {
+  from {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.expand-animation {
+  animation: expand 0.25s ease-out;
+}

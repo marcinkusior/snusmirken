@@ -3,8 +3,7 @@ import "./Window.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowMinimize, faXmark } from "@fortawesome/free-solid-svg-icons";
-
-let zIndexCounter = 1;
+import { zIndexCounter } from "./windowZIndex";
 
 interface WindowProps {
   title: string;
@@ -74,13 +73,13 @@ export const BasicWindow = ({
   return (
     <div
       onMouseDown={() => {
-        zIndexCounter++;
+        zIndexCounter.increment();
       }}
       ref={windowRef}
       className={`window fixed overflow-hidden rounded-[22px]`}
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
-        zIndex: zIndexCounter,
+        zIndex: zIndexCounter.get(),
       }}
     >
       <div
@@ -105,7 +104,7 @@ export const BasicWindow = ({
         </div>
       </div>
 
-      <div className="h-[calc(100%-2.5rem)] overflow-auto">{children}</div>
+      <div className="h-[calc(100%-2.5rem)] overflow-auto p-4">{children}</div>
     </div>
   );
 };

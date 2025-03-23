@@ -11,8 +11,8 @@ interface BoardProps {
 const Board: React.FC<BoardProps> = memo(
   ({ board, onCellClick, onCellRightClick }) => {
     return (
-      <div className="mt-2 border-b-[3px] border-l-[3px] border-r-[3px] border-t-[3px] border-[#808080] border-b-[#ffffff] border-r-[#ffffff]">
-        <div className="grid grid-cols-9 gap-0 bg-[#c0c0c0]">
+      <div className="mt-2">
+        <div className="grid grid-cols-9 gap-1 bg-white">
           {board.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <Cell

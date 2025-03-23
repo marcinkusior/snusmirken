@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { Flag, Bomb } from "lucide-react";
 import { generateBoard, revealCell, flagCell, checkWin } from "./gameLogic";
 import { Cell, GameState } from "./types";
@@ -8,7 +8,6 @@ import { Board } from "./Board";
 export const Minesweeper = () => {
   const [board, setBoard] = useState<Cell[][]>([]);
   const [gameState, setGameState] = useState<GameState>("playing");
-  const [mineCount, setMineCount] = useState(10);
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [firstClick, setFirstClick] = useState(true);
   const [intervalId, setIntervalId] = useState<number | null>(null);
@@ -17,7 +16,6 @@ export const Minesweeper = () => {
     const newBoard = generateBoard(9, 9, 10);
     setBoard(newBoard);
     setGameState("playing");
-    setMineCount(10);
     setTimeElapsed(0);
     setFirstClick(true);
     if (intervalId) {
@@ -75,13 +73,24 @@ export const Minesweeper = () => {
       if (gameState !== "playing") return;
 
       setBoard((prevBoard) => {
-        const [newBoard, flagged] = flagCell(prevBoard, row, col);
-        setMineCount((prev) => (flagged ? prev - 1 : prev + 1));
+        const [newBoard] = flagCell(prevBoard, row, col);
         return newBoard;
       });
     },
     [gameState],
   );
+
+  const mineCount = useMemo(() => {
+    let result = 0;
+    board.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.isFlagged) {
+          result += 1;
+        }
+      });
+    });
+    return 10 - result;
+  }, [board]);
 
   return (
     <div className="flex items-center justify-center">

@@ -26,17 +26,14 @@ const Header: React.FC<HeaderProps> = memo(
     };
 
     return (
-      <div className="flex items-center justify-between bg-white">
-        <div className="border-[3px] border-prettyBlue px-2 py-1 text-2xl text-prettyBlue">
+      <div className="mb-[15px] mt-[-5px] flex items-center justify-between bg-white">
+        <div className="px-2 text-2xl text-prettyBlue">
           {formatNumber(mineCount)}
         </div>
-        <button
-          onClick={onReset}
-          className="flex h-10 w-10 items-center justify-center border-b-[3px] border-l-[3px] border-r-[3px] border-t-[3px] border-[#ffffff] border-b-[#808080] border-r-[#808080] bg-[#c0c0c0] text-2xl"
-        >
+        <button onClick={onReset} className="border-prettyBlue text-2xl">
           {getFaceEmoji()}
         </button>
-        <div className="border-[3px] border-prettyBlue px-2 py-1 text-2xl text-prettyBlue">
+        <div className="px-2 text-2xl text-prettyBlue">
           {formatNumber(Math.min(timeElapsed, 999))}
         </div>
       </div>

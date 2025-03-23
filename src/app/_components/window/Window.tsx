@@ -10,8 +10,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faWindowMaximize } from "@fortawesome/free-regular-svg-icons";
 import { z } from "zod";
-
-let zIndexCounter = 1;
+import { zIndexCounter } from "./windowZIndex";
 
 interface WindowProps {
   title: string;
@@ -116,17 +115,19 @@ export const Window = ({
   return (
     <div
       onMouseDown={() => {
-        zIndexCounter++;
+        zIndexCounter.increment();
       }}
       ref={windowRef}
-      className={`window fixed overflow-hidden rounded-[22px] ${
+      className={`window expand-animation fixed overflow-hidden rounded-[22px] ${
         isTransitionActive ? "transition-all duration-300 ease-in-out" : ""
       }`}
       style={{
         width: size.width,
         height: size.height,
-        transform: `translate(${position.x}px, ${position.y}px)`,
-        zIndex: zIndexCounter,
+        // transform: `translate(${position.x}px, ${position.y}px)`,
+        top: position.y,
+        left: position.x,
+        zIndex: zIndexCounter.get(),
       }}
     >
       <div
