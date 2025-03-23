@@ -3,7 +3,6 @@
 import { Post, TripFragment } from "@prisma/client";
 import { useParams } from "next/navigation";
 import React, { useRef, useState } from "react";
-import { Photo } from "~/app/_components/Photo";
 import Loading from "~/app/_components/loading";
 import { NiceButton } from "~/app/_components/niceButton/NiceButton";
 import {
@@ -16,7 +15,9 @@ import { Window } from "~/app/_components/window/Window";
 import { PhotoFinder } from "~/app/_components/PhotoFinder/PhotoFinder";
 import { Taskbar } from "~/app/_components/Taskbar/Taskbar";
 import { DesktopIcon } from "~/app/_components/DesktopIcon/DesktopIcon";
-import { Folder } from "lucide-react";
+import { Folder, Wind } from "lucide-react";
+import { Minesweeper } from "~/components/minesweeper/Minesweeper";
+import { BasicWindow } from "~/app/_components/window/BasicWindow";
 
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
@@ -99,6 +100,14 @@ const TripPage = () => {
             />
           ))}
         </div>
+
+        <BasicWindow
+          defaultPosition={{ x: 460, y: 100 }}
+          defaultSize={{ width: 900, height: 600 }}
+          title="Minesweepurr"
+        >
+          <Minesweeper />
+        </BasicWindow>
 
         <DesktopIcon
           onDoubleClick={() => {
