@@ -28,9 +28,14 @@ export const BasicWindow = ({
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (isDragging) {
+        let positionY = e.clientY - dragStart.y;
+        if (positionY < 0) positionY = 0;
+
+        const positionX = e.clientX - dragStart.x;
+
         setPosition({
-          x: e.clientX - dragStart.x,
-          y: e.clientY - dragStart.y,
+          x: positionX,
+          y: positionY,
         });
       }
     };

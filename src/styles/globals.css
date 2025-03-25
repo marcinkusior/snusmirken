@@ -104,16 +104,17 @@ body::after {
 }
 
 @keyframes expand {
-  from {
+  0% {
     transform: scale(0.2);
     opacity: 0;
   }
-  to {
+
+  100% {
     transform: scale(1);
     opacity: 1;
   }
 }
 
 .expand-animation {
-  animation: expand 0.25s ease-out;
+  animation: expand 0.3s cubic-bezier(0.5, 1, 0.2, 1.13) 0s 1 normal forwards;
 }

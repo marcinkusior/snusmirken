@@ -104,7 +104,7 @@ const TripPage = () => {
         <BasicWindow
           defaultPosition={{ x: 460, y: 100 }}
           defaultSize={{ width: 900, height: 600 }}
-          title="Minesweepurr"
+          title="Minesweepurr.exe"
         >
           <Minesweeper />
         </BasicWindow>
@@ -119,7 +119,7 @@ const TripPage = () => {
 
         {isMapOpen && (
           <Window
-            title="Map"
+            title="Map.exe"
             defaultPosition={{ x: 35, y: 100 }}
             defaultSize={{ width: 400, height: 440 }}
             onClose={() => setIsMapOpen(false)}
