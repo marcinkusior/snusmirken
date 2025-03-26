@@ -21,3 +21,35 @@
 .shadow-sm {
   box-shadow: #3d04fc 1 1 0px 0px;
 }
+
+@keyframes expand {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.expand-animation {
+  animation: expand 0.3s cubic-bezier(0.5, 1, 0.2, 1.13) 0s 1 normal forwards;
+}
+
+@keyframes retract {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+
+.retract-animation {
+  animation: retract 0.3s cubic-bezier(0.2, 0.6, 0.6, 1.13) 0s 1 normal forwards;
+}

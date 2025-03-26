@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, ReactNode } from "react";
 import "./Window.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,6 +18,8 @@ interface WindowProps {
   defaultPosition?: { x: number; y: number };
   defaultSize?: { width: number; height: number };
   onClose?: () => void;
+  icon?: ReactNode;
+  isOpen: boolean;
 }
 
 export const Window = ({
@@ -26,6 +28,8 @@ export const Window = ({
   defaultPosition = { x: 100, y: 100 },
   defaultSize = { width: 400, height: 300 },
   onClose,
+  icon,
+  isOpen,
 }: WindowProps) => {
   const [position, setPosition] = useState(defaultPosition);
   const [size, setSize] = useState(defaultSize);
@@ -35,6 +39,10 @@ export const Window = ({
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [originalSize, setOriginalSize] = useState(defaultSize);
   const [originalPosition, setOriginalPosition] = useState(defaultPosition);
+
+  const isOpenDebounced = useDebounce(isOpen, 300);
+  const isWindowOpen = isOpenDebounced || isOpen;
+  const showCloseAnimation = !isOpen && isOpenDebounced;
 
   const isMaximizedDebounce = useDebounce(isMaximized, 320);
   const isTransitionActive = isMaximizedDebounce || isMaximized;
@@ -117,13 +125,15 @@ export const Window = ({
     if (onClose) onClose();
   };
 
+  if (!isWindowOpen) return null;
+
   return (
     <div
       onMouseDown={() => {
         zIndexCounter.increment();
       }}
       ref={windowRef}
-      className={`window expand-animation fixed overflow-hidden rounded-[22px] ${
+      className={`window expand-animation fixed overflow-hidden rounded-[22px] ${showCloseAnimation ? "retract-animation" : ""} ${
         isTransitionActive ? "transition-all duration-300 ease-in-out" : ""
       }`}
       style={{
@@ -139,7 +149,10 @@ export const Window = ({
         onMouseDown={handleDragStart}
         onDoubleClick={handleMaximize}
       >
-        <span className="truncate font-bold">{title}</span>
+        <span className="flex items-center gap-3 truncate">
+          {icon}
+          {title}
+        </span>
         <div className="window-controls flex items-center space-x-2">
           <FontAwesomeIcon
             onClick={handleMinimize}

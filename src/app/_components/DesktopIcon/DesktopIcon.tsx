@@ -52,7 +52,7 @@ export const DesktopIcon: React.FC<DesktopIconProps> = ({
 
   return (
     <div
-      className={`absolute flex cursor-move select-none flex-col items-center rounded-lg border-2 border-transparent p-2 hover:border-nicePurple/50 hover:bg-nicePurple/10 ${isDragging ? "opacity-50" : ""} `}
+      className={`absolute flex w-[105px] cursor-move select-none flex-col items-center rounded-lg border-2 border-transparent p-2 hover:border-nicePurple/50 hover:bg-nicePurple/10 ${isDragging ? "opacity-50" : ""} `}
       style={{
         left: position.x,
         top: position.y,
@@ -63,8 +63,8 @@ export const DesktopIcon: React.FC<DesktopIconProps> = ({
       onDragEnd={handleDragEnd}
       onDoubleClick={onDoubleClick}
     >
-      <div className="text-[#3d04fc]">{icon}</div>
-      <span className="rounded bg-white/0 px-1 text-center text-sm font-medium text-[#3d04fc]">
+      <div className="text-prettyBlue">{icon}</div>
+      <span className="break-words rounded bg-white/0 px-1 text-center text-sm font-medium text-prettyBlue">
         {label}
       </span>
     </div>

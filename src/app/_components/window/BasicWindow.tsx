@@ -4,6 +4,7 @@ import "./Window.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowMinimize, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { zIndexCounter } from "./windowZIndex";
+import { useDebounce } from "@uidotdev/usehooks";
 
 interface WindowProps {
   title: string;
@@ -11,6 +12,8 @@ interface WindowProps {
   defaultPosition?: { x: number; y: number };
   defaultSize?: { width: number; height: number };
   onClose?: () => void;
+  isOpen: boolean;
+  icon: React.ReactNode;
 }
 
 export const BasicWindow = ({
@@ -18,10 +21,16 @@ export const BasicWindow = ({
   children,
   defaultPosition = { x: 100, y: 100 },
   onClose,
+  isOpen,
+  icon,
 }: WindowProps) => {
   const [position, setPosition] = useState(defaultPosition);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+
+  const isOpenDebounced = useDebounce(isOpen, 300);
+  const isWindowOpen = isOpenDebounced || isOpen;
+  const showCloseAnimation = !isOpen && isOpenDebounced;
 
   const windowRef = useRef<HTMLDivElement>(null);
 
@@ -75,23 +84,29 @@ export const BasicWindow = ({
     if (onClose) onClose();
   };
 
+  if (!isWindowOpen) return null;
+
   return (
     <div
       onMouseDown={() => {
         zIndexCounter.increment();
       }}
       ref={windowRef}
-      className={`window fixed overflow-hidden rounded-[22px]`}
+      className={`window expand-animation fixed overflow-hidden rounded-[22px] ${showCloseAnimation ? "retract-animation" : ""}`}
       style={{
-        transform: `translate(${position.x}px, ${position.y}px)`,
         zIndex: zIndexCounter.get(),
+        top: position.y,
+        left: position.x,
       }}
     >
       <div
         className="flex h-10 cursor-move items-center justify-between border-b-[4px] border-prettyBlue bg-white px-4 text-prettyBlue"
         onMouseDown={handleDragStart}
       >
-        <span className="truncate font-bold">{title}</span>
+        <span className="flex items-center gap-2 truncate">
+          {icon}
+          {title}
+        </span>
         <div className="window-controls flex items-center space-x-2">
           <FontAwesomeIcon
             onClick={handleMinimize}

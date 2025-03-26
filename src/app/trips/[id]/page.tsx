@@ -5,19 +5,16 @@ import { useParams } from "next/navigation";
 import React, { useRef, useState } from "react";
 import Loading from "~/app/_components/loading";
 import { NiceButton } from "~/app/_components/niceButton/NiceButton";
-import {
-  type FlyToCoordinatesFunction,
-  MapComponent,
-} from "~/components/map/Map";
+import { type FlyToCoordinatesFunction } from "~/app/_components/Map/Map";
 import { api } from "~/trpc/react";
 import "./tripContainer.css";
-import { Window } from "~/app/_components/window/Window";
-import { PhotoFinder } from "~/app/_components/PhotoFinder/PhotoFinder";
 import { Taskbar } from "~/app/_components/Taskbar/Taskbar";
-import { DesktopIcon } from "~/app/_components/DesktopIcon/DesktopIcon";
-import { Folder, Wind } from "lucide-react";
 import { Minesweeper } from "~/components/minesweeper/Minesweeper";
 import { BasicWindow } from "~/app/_components/window/BasicWindow";
+import { MapWindow } from "~/app/_components/Map/MapWindow";
+import { DesktopIcons } from "~/app/_components/DesktopIcon/DesktopIcons";
+import { PhotoFinderWindow } from "~/app/_components/PhotoFinder/PhotoFinderWindow";
+import { MinesweeperWindow } from "~/components/minesweeper/MinesweeperWindow";
 
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
@@ -78,92 +75,10 @@ const TripPage = () => {
         }}
         className="mx-auto h-[100vh]"
       >
-        <div className="absolute left-10 top-10 flex translate-y-[-50%] flex-row gap-[2px]">
-          <div className="pr-10">
-            <NiceButton
-              onClick={() => {
-                setIsMapOpen((prev) => !prev);
-              }}
-              highlight={isMapOpen}
-              text="Map"
-            />
-          </div>
-
-          {tripFragments?.map((tripFragment) => (
-            <NiceButton
-              onClick={() => {
-                updatTripFragment(tripFragment);
-              }}
-              key={tripFragment.id}
-              highlight={selectedTripFragment?.id === tripFragment.id}
-              text={tripFragment.name}
-            />
-          ))}
-        </div>
-
-        <BasicWindow
-          defaultPosition={{ x: 460, y: 100 }}
-          defaultSize={{ width: 900, height: 600 }}
-          title="Minesweepurr.exe"
-        >
-          <Minesweeper />
-        </BasicWindow>
-
-        <DesktopIcon
-          onDoubleClick={() => {
-            setSelectedTripFragment(tripFragments[0]);
-          }}
-          icon={<Folder size={60} strokeWidth={1.5} fill="white" />}
-          label="Tokyo"
-        />
-
-        {isMapOpen && (
-          <Window
-            title="Map.exe"
-            defaultPosition={{ x: 35, y: 100 }}
-            defaultSize={{ width: 400, height: 440 }}
-            onClose={() => setIsMapOpen(false)}
-          >
-            <MapComponent
-              setFlyToCoordinates={setFlyToCoordinates}
-              posts={posts}
-              latitude={35.30889}
-              longitude={139.55028}
-            />
-          </Window>
-        )}
-
-        {selectedTripFragment && (
-          <Window
-            defaultPosition={{ x: 460, y: 100 }}
-            defaultSize={{ width: 900, height: 600 }}
-            title={selectedTripFragment?.name}
-            onClose={() => setSelectedTripFragment(null)}
-          >
-            <PhotoFinder
-              posts={tripFragmentPosts as Post[]}
-              isLoading={isLoadingTripFragmentPosts}
-            />
-
-            {/* <div
-              id="trip-container"
-              className="relative flex h-[70vh] flex-grow"
-            >
-              {isLoadingTripFragmentPosts && <Loading />}
-
-              <div className="relative flex flex-row flex-wrap gap-10 overflow-y-scroll">
-                {tripFragmentPosts?.map((post, index) => (
-                  <Photo
-                    key={post.id}
-                    text={post.name}
-                    imageUrl={post.imageUrl}
-                    index={index}
-                  />
-                ))}
-              </div>
-            </div> */}
-          </Window>
-        )}
+        <DesktopIcons />
+        <MinesweeperWindow />
+        <MapWindow posts={posts} />
+        <PhotoFinderWindow />
       </div>
       <Taskbar />
     </>

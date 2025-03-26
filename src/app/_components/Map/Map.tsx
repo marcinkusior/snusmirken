@@ -13,7 +13,7 @@ import { PostFormValues } from "~/app/_types/PostFormValues";
 import { useRef } from "react";
 import { map } from "zod";
 
-type FlyToCoordinatesFunction = ({
+export type FlyToCoordinatesFunction = ({
   latitude,
   longitude,
 }: {
