@@ -6,6 +6,8 @@ import { useDebounce } from "@uidotdev/usehooks";
 import { faWindowMinimize, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faWindowMaximize } from "@fortawesome/free-regular-svg-icons";
 import { zIndexCounter } from "./windowZIndex";
+import { useBooleanForAnimation } from "~/app/utils/useBooleanForAnimation";
+import cx from "classnames";
 
 interface WindowProps {
   title: string;
@@ -47,9 +49,11 @@ export const Window = ({
     }
   }, [isOpen]);
 
-  const isOpenDebounced = useDebounce(isOpen, 300);
-  const isWindowOpen = isOpenDebounced || isOpen;
-  const showCloseAnimation = !isOpen && isOpenDebounced;
+  const [isWindowOpen, isWindowExpanded] = useBooleanForAnimation(
+    isOpen,
+    1,
+    300,
+  );
 
   const isMaximizedDebounce = useDebounce(isMaximized, 320);
   const isTransitionActive = isMaximizedDebounce || isMaximized || isMinimized;
@@ -143,13 +147,17 @@ export const Window = ({
         setZIndex(zIndexCounter.get());
       }}
       ref={windowRef}
-      className={`window expand-animation fixed overflow-hidden rounded-[22px] ${showCloseAnimation ? "retract-animation" : ""} ${
-        isTransitionActive ? "transition-all duration-300 ease-in-out" : ""
-      } ${isMinimized ? "retract-animation" : ""}`}
+      className={cx("window", "fixed", "overflow-hidden", "rounded-[22px]", {
+        "window-expand": isWindowExpanded,
+        "window-minimized": isMinimized,
+        "window-transition-off": isDragging || isResizing,
+      })}
       style={{
         width: size.width,
         height: size.height,
-        top: position.y,
+        top: isMinimized
+          ? window.innerHeight - size.height / 2 - 20
+          : position.y,
         left: position.x,
         zIndex: zIndex,
       }}
@@ -194,7 +202,7 @@ export const Window = ({
           className="absolute bottom-0 right-0 h-4 w-4 cursor-se-resize"
           onMouseDown={handleResizeStart}
         >
-          <div className="absolute relative bottom-1 left-[3px] top-[-1px] h-[11px] w-[4px] rotate-45 rounded-full bg-prettyBlue" />
+          <div className="absolute bottom-1 left-[3px] top-[-1px] h-[11px] w-[4px] rotate-45 rounded-full bg-prettyBlue" />
         </div>
       )}
     </div>

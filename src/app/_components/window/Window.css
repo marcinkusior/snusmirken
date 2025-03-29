@@ -4,14 +4,15 @@
     #3d04fc 5.8px 5.8px 0px 0px,
     #fce2f0dd -1.2px -1.2px 0px 0px;
   background: white;
-  /* box-shadow: rgb(13, 19, 19) 4.8px 4.8px 0px 0px; */
   position: absolute;
-  /* background-image: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 0.119) 1px,
-    transparent 1px
-  );
-  background-size: 20px 20px; */
+
+  transform: scale(0.2);
+  transition: all 0.3s cubic-bezier(0.5, 1, 0.2, 1);
+  /* transition:
+    transform 0.3s cubic-bezier(0.5, 1, 0.2, 1.13),
+    top 0.3s cubic-bezier(0.5, 1, 0.2, 1.13),
+    opacity 0.3s cubic-bezier(0.5, 1, 0.2, 1.13); */
+  opacity: 0;
 }
 
 .shadow-bl {
@@ -22,34 +23,15 @@
   box-shadow: #3d04fc 1 1 0px 0px;
 }
 
-@keyframes expand {
-  0% {
-    transform: scale(0.2);
-    opacity: 0;
-  }
-
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+.window-expand {
+  transform: scale(1);
+  opacity: 1;
 }
 
-.expand-animation {
-  animation: expand 0.3s cubic-bezier(0.5, 1, 0.2, 1.13) 0s 1 normal forwards;
+.window-minimized {
+  transform: scale(0) !important;
 }
 
-@keyframes retract {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  100% {
-    transform: scale(0.2);
-    opacity: 0;
-  }
-}
-
-.retract-animation {
-  animation: retract 0.3s cubic-bezier(0.2, 0.6, 0.6, 1.13) 0s 1 normal forwards;
+.window-transition-off {
+  transition: none !important;
 }
