@@ -25,6 +25,13 @@ export const ActivePrograms = () => {
     (state) => state.selectedTripFragment,
   );
 
+  const isPhotoFinderMinimized = usePhotoFinderStore(
+    (state) => state.isMinimized,
+  );
+  const toggleMinimizePhotoFinder = usePhotoFinderStore(
+    (state) => state.toggleMinimize,
+  );
+
   const isMapMinimized = useMapWindowStore((state) => state.isMinimized);
   const toggleMinimizeMap = useMapWindowStore((state) => state.toggleMinimize);
 
@@ -48,6 +55,7 @@ export const ActivePrograms = () => {
           onClick={toggleMinimizeMap}
           isMinimized={isMapMinimized}
           initialOrder={orderCounter}
+          id="map-taskbar-button"
         />
       )}
 
@@ -66,8 +74,11 @@ export const ActivePrograms = () => {
           icon={
             <Folder size={16} strokeWidth={2} fill="#3d04fc" stroke="#3d04fc" />
           }
-          text={selectedTripFragment?.name}
+          text={selectedTripFragment?.name ?? ""}
           initialOrder={orderCounter}
+          isMinimized={isPhotoFinderMinimized}
+          onClick={toggleMinimizePhotoFinder}
+          id="photo-finder-taskbar-button"
         />
       )}
     </div>

@@ -14,6 +14,9 @@ export const PhotoFinderWindow = () => {
   const isOpen = usePhotoFinderStore((state) => state.isOpen);
   const close = usePhotoFinderStore((state) => state.close);
 
+  const isMinimized = usePhotoFinderStore((state) => state.isMinimized);
+  const minimize = usePhotoFinderStore((state) => state.minimize);
+
   const { data: tripFragmentPosts, isLoading: isLoadingTripFragmentPosts } =
     api.post.getByTripFragmentId.useQuery(
       parseInt(selectedTripFragment?.id as number),
@@ -26,10 +29,13 @@ export const PhotoFinderWindow = () => {
     <Window
       defaultPosition={{ x: 460, y: 100 }}
       defaultSize={{ width: 900, height: 600 }}
-      title={selectedTripFragment?.name}
+      title={selectedTripFragment?.name ?? ""}
       onClose={close}
       icon={<Folder size={22} strokeWidth={2} fill="white" />}
       isOpen={isOpen}
+      isMinimized={isMinimized}
+      minimize={minimize}
+      taskbarButtonId="photo-finder-taskbar-button"
     >
       <PhotoFinder
         posts={tripFragmentPosts as Post[]}

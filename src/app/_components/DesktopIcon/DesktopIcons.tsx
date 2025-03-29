@@ -9,7 +9,13 @@ import { useMinesweepurrrWindowStore } from "~/app/stores/minesweepurrrWindowSto
 
 const useDesktopIcons = (tripFragments: TripFragment[]) => {
   const openMap = useMapWindowStore((state) => state.open);
+  const unMinimizeMap = useMapWindowStore((state) => state.unMinimize);
+
   const openPhotoFinder = usePhotoFinderStore((state) => state.open);
+  const unMinimizePhotoFinder = usePhotoFinderStore(
+    (state) => state.unMinimize,
+  );
+
   const setSelectedTripFragment = usePhotoFinderStore().setSelectedTripFragment;
   const openMinesweepurrr = useMinesweepurrrWindowStore().open;
 
@@ -17,13 +23,18 @@ const useDesktopIcons = (tripFragments: TripFragment[]) => {
     {
       name: "Map.exe",
       icon: <MapIcon size={60} strokeWidth={1.5} fill="white" />,
-      onDoubleClick: openMap,
+      onDoubleClick: () => {
+        openMap();
+        unMinimizeMap();
+      },
     },
 
     {
       name: "Minesweepurrr.exe",
       icon: <Bomb size={60} strokeWidth={1.5} fill="white" />,
-      onDoubleClick: openMinesweepurrr,
+      onDoubleClick: () => {
+        openMinesweepurrr();
+      },
     },
 
     ...tripFragments.map((tripFragment) => ({
@@ -31,6 +42,7 @@ const useDesktopIcons = (tripFragments: TripFragment[]) => {
       icon: <Folder size={60} strokeWidth={1.5} fill="white" />,
       onDoubleClick: () => {
         openPhotoFinder();
+        unMinimizePhotoFinder();
         setSelectedTripFragment(tripFragment);
       },
     })),

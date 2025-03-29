@@ -1,5 +1,6 @@
-import { LucideIcon } from "lucide-react";
 import { ReactNode, useState } from "react";
+import cx from "classnames";
+import "./TaskbarButton.css";
 
 interface TaskbarButtonProps {
   icon: ReactNode;
@@ -24,7 +25,25 @@ export const TaskbarButton = ({
     <div
       data-id={id}
       style={{ order }}
-      className={`nice-transition mr-[5px] flex h-full items-center gap-2 rounded-[25px] border-[1px] border-prettyBlue ${isMinimized ? "bg-white" : "bg-prettyBlue/10"} px-4 py-1 shadow-inner`}
+      className={cx(
+        "nice-transition",
+        "mr-[5px]",
+        "flex",
+        "h-full",
+        "items-center",
+        "gap-2",
+        "rounded-[25px]",
+        "border-[1px]",
+        "border-prettyBlue",
+        "animate-roll-in",
+        "px-4",
+        "py-1",
+        "shadow-inner",
+        {
+          "bg-white shadow-sm": isMinimized,
+          "bg-prettyBlue/10": !isMinimized,
+        },
+      )}
       onClick={onClick}
     >
       {icon}

@@ -19,6 +19,7 @@ interface WindowProps {
   isOpen: boolean;
   minimize: () => void;
   isMinimized: boolean;
+  taskbarButtonId: string;
 }
 
 export const Window = ({
@@ -31,6 +32,7 @@ export const Window = ({
   isOpen,
   minimize,
   isMinimized,
+  taskbarButtonId,
 }: WindowProps) => {
   const [position, setPosition] = useState(defaultPosition);
   const [size, setSize] = useState(defaultSize);
@@ -41,13 +43,43 @@ export const Window = ({
   const [originalSize, setOriginalSize] = useState(defaultSize);
   const [originalPosition, setOriginalPosition] = useState(defaultPosition);
   const [zIndex, setZIndex] = useState(zIndexCounter.get());
+  const [minizedPosition, setMinizedPosition] = useState({ x: 0, y: 0 });
+
+  const updateMinizedPosition = () => {
+    const taskbarButton = document.querySelector(
+      `[data-id="${taskbarButtonId}"]`,
+    );
+
+    if (taskbarButton) {
+      const rect = taskbarButton.getBoundingClientRect();
+
+      console.log(rect);
+
+      const x = rect.x + rect.width / 2 - size.width / 2;
+      const y = rect.y + rect.height / 2 - size.height / 2;
+
+      setMinizedPosition({
+        x: x,
+        y: y,
+      });
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
       zIndexCounter.increment();
       setZIndex(zIndexCounter.get());
     }
-  }, [isOpen]);
+
+    if (!isMinimized) {
+      zIndexCounter.increment();
+      setZIndex(zIndexCounter.get());
+    }
+
+    if (isMinimized) {
+      updateMinizedPosition();
+    }
+  }, [isOpen, isMinimized]);
 
   const [isWindowOpen, isWindowExpanded] = useBooleanForAnimation(
     isOpen,
@@ -155,10 +187,8 @@ export const Window = ({
       style={{
         width: size.width,
         height: size.height,
-        top: isMinimized
-          ? window.innerHeight - size.height / 2 - 20
-          : position.y,
-        left: position.x,
+        top: isMinimized ? minizedPosition.y : position.y,
+        left: isMinimized ? minizedPosition.x : position.x,
         zIndex: zIndex,
       }}
     >
