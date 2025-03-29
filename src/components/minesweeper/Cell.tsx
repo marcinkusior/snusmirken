@@ -23,7 +23,13 @@ const Cell: React.FC<CellProps> = memo(({ cell, onClick, onRightClick }) => {
   const getCellContent = () => {
     if (cell.isRevealed) {
       if (cell.isMine) {
-        return <Bomb size={14} strokeWidth={3} className="text-" />;
+        return (
+          <Bomb
+            size={14}
+            strokeWidth={3}
+            className="fill-red-400 stroke-prettyBlue"
+          />
+        );
       }
       if (cell.neighborMines > 0) {
         return (

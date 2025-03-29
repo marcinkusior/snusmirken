@@ -49,7 +49,7 @@ export const DesktopIcons = () => {
 
   return desktopIcons.map((desktopIcon, index) => (
     <DesktopIcon
-      initialPosition={{ x: 20 + index * 105, y: 20 }}
+      initialPosition={{ x: 15, y: 20 + index * 125 }}
       key={desktopIcon.name}
       icon={desktopIcon.icon}
       label={desktopIcon.name}

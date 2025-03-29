@@ -27,6 +27,14 @@ export const BasicWindow = ({
   const [position, setPosition] = useState(defaultPosition);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [zIndex, setZIndex] = useState(zIndexCounter.get());
+
+  useEffect(() => {
+    if (isOpen) {
+      zIndexCounter.increment();
+      setZIndex(zIndexCounter.get());
+    }
+  }, [isOpen]);
 
   const isOpenDebounced = useDebounce(isOpen, 300);
   const isWindowOpen = isOpenDebounced || isOpen;
@@ -90,13 +98,14 @@ export const BasicWindow = ({
     <div
       onMouseDown={() => {
         zIndexCounter.increment();
+        setZIndex(zIndexCounter.get());
       }}
       ref={windowRef}
       className={`window expand-animation fixed overflow-hidden rounded-[22px] ${showCloseAnimation ? "retract-animation" : ""}`}
       style={{
-        zIndex: zIndexCounter.get(),
         top: position.y,
         left: position.x,
+        zIndex: zIndex,
       }}
     >
       <div

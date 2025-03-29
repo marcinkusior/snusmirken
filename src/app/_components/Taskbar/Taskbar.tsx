@@ -14,6 +14,7 @@ import {
 import cx from "classnames";
 
 import { useEffect, useRef, useState } from "react";
+import { ActivePrograms } from "./ActivePrograms";
 
 function MenuItem({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
@@ -93,11 +94,11 @@ export const Taskbar = () => {
         <button
           ref={startButtonRef}
           onClick={() => setIsStartMenuOpen(!isStartMenuOpen)}
-          className={`br-2 flex items-center gap-2 rounded border-white px-2 py-1 text-prettyBlue`}
+          className={`br-2 flex flex-grow-0 items-center gap-2 px-2 py-1 text-prettyBlue`}
         >
           <span
             className={cx(
-              "p bold rounded-[19px] border-2 border-transparent p-[3px] pl-3 pr-3 text-sm",
+              "p bold mr-[5px] rounded-[19px] border-2 border-transparent p-[3px] pl-3 pr-3 text-sm",
               isStartMenuOpen ? "bg-prettyBlue text-white" : "",
             )}
           >
@@ -105,8 +106,12 @@ export const Taskbar = () => {
           </span>
         </button>
 
+        <div className="flex-grow">
+          <ActivePrograms />
+        </div>
+
         {/* System Tray */}
-        <div className="flex items-center gap-2 px-2 py-1">
+        <div className="flex flex-grow-0 items-center gap-2 px-2 py-1">
           <span className="text-sm">{currentTime}</span>
         </div>
       </div>

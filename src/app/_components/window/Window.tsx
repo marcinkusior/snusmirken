@@ -3,13 +3,8 @@ import "./Window.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDebounce } from "@uidotdev/usehooks";
-import {
-  faWindowMinimize,
-  faXmark,
-  faPlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faWindowMinimize, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faWindowMaximize } from "@fortawesome/free-regular-svg-icons";
-import { z } from "zod";
 import { zIndexCounter } from "./windowZIndex";
 
 interface WindowProps {
@@ -20,6 +15,8 @@ interface WindowProps {
   onClose?: () => void;
   icon?: ReactNode;
   isOpen: boolean;
+  minimize: () => void;
+  isMinimized: boolean;
 }
 
 export const Window = ({
@@ -30,6 +27,8 @@ export const Window = ({
   onClose,
   icon,
   isOpen,
+  minimize,
+  isMinimized,
 }: WindowProps) => {
   const [position, setPosition] = useState(defaultPosition);
   const [size, setSize] = useState(defaultSize);
@@ -39,13 +38,21 @@ export const Window = ({
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [originalSize, setOriginalSize] = useState(defaultSize);
   const [originalPosition, setOriginalPosition] = useState(defaultPosition);
+  const [zIndex, setZIndex] = useState(zIndexCounter.get());
+
+  useEffect(() => {
+    if (isOpen) {
+      zIndexCounter.increment();
+      setZIndex(zIndexCounter.get());
+    }
+  }, [isOpen]);
 
   const isOpenDebounced = useDebounce(isOpen, 300);
   const isWindowOpen = isOpenDebounced || isOpen;
   const showCloseAnimation = !isOpen && isOpenDebounced;
 
   const isMaximizedDebounce = useDebounce(isMaximized, 320);
-  const isTransitionActive = isMaximizedDebounce || isMaximized;
+  const isTransitionActive = isMaximizedDebounce || isMaximized || isMinimized;
 
   const windowRef = useRef<HTMLDivElement>(null);
 
@@ -119,7 +126,9 @@ export const Window = ({
     setIsMaximized(!isMaximized);
   };
 
-  const handleMinimize = () => {};
+  const handleMinimize = () => {
+    minimize();
+  };
 
   const handleClose = () => {
     if (onClose) onClose();
@@ -131,17 +140,18 @@ export const Window = ({
     <div
       onMouseDown={() => {
         zIndexCounter.increment();
+        setZIndex(zIndexCounter.get());
       }}
       ref={windowRef}
       className={`window expand-animation fixed overflow-hidden rounded-[22px] ${showCloseAnimation ? "retract-animation" : ""} ${
         isTransitionActive ? "transition-all duration-300 ease-in-out" : ""
-      }`}
+      } ${isMinimized ? "retract-animation" : ""}`}
       style={{
         width: size.width,
         height: size.height,
         top: position.y,
         left: position.x,
-        zIndex: zIndexCounter.get(),
+        zIndex: zIndex,
       }}
     >
       <div
@@ -177,21 +187,14 @@ export const Window = ({
         </div>
       </div>
 
-      {/* Window Content */}
       <div className="h-[calc(100%-2.5rem)] overflow-auto p-4">{children}</div>
 
-      {/* Resize Handle */}
       {!isMaximized && (
         <div
           className="absolute bottom-0 right-0 h-4 w-4 cursor-se-resize"
           onMouseDown={handleResizeStart}
         >
-          {/* <div className="absolute bottom-1 right-1 h-2 w-2 rounded-sm bg-gray-400" /> */}
-          <FontAwesomeIcon
-            icon={faPlus}
-            className="absolute bottom-1 right-1 text-gray-400"
-            size="sm"
-          />
+          <div className="absolute relative bottom-1 left-[3px] top-[-1px] h-[11px] w-[4px] rotate-45 rounded-full bg-prettyBlue" />
         </div>
       )}
     </div>

@@ -16,6 +16,9 @@ export const MapWindow = ({ posts }: { posts: Post[] }) => {
   const isMapOpen = useMapWindowStore((state) => state.isOpen);
   const closeMap = useMapWindowStore((state) => state.close);
 
+  const minimizeMap = useMapWindowStore((state) => state.minimize);
+  const isMinimized = useMapWindowStore((state) => state.isMinimized);
+
   return (
     <Window
       title="Map.exe"
@@ -24,6 +27,8 @@ export const MapWindow = ({ posts }: { posts: Post[] }) => {
       onClose={() => closeMap()}
       icon={<MapIcon size={22} strokeWidth={2} fill="white" />}
       isOpen={isMapOpen}
+      minimize={minimizeMap}
+      isMinimized={isMinimized}
     >
       <MapComponent
         setFlyToCoordinates={setFlyToCoordinates}
