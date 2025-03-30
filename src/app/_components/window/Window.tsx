@@ -88,7 +88,7 @@ export const Window = ({
   );
 
   const isMaximizedDebounce = useDebounce(isMaximized, 320);
-  const isTransitionActive = isMaximizedDebounce || isMaximized || isMinimized;
+  const disableDragging = isMaximizedDebounce || isMaximized || isMinimized;
 
   const windowRef = useRef<HTMLDivElement>(null);
 
@@ -129,7 +129,7 @@ export const Window = ({
   }, [isDragging, isResizing, dragStart, position]);
 
   const handleDragStart = (e: React.MouseEvent) => {
-    if (isTransitionActive) return;
+    if (disableDragging) return;
 
     if (
       e.target instanceof HTMLElement &&

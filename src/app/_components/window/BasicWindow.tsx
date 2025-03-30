@@ -1,19 +1,22 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, ReactNode } from "react";
 import "./Window.css";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWindowMinimize, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { zIndexCounter } from "./windowZIndex";
-import { useDebounce } from "@uidotdev/usehooks";
+import { useBooleanForAnimation } from "~/app/utils/useBooleanForAnimation";
+import cx from "classnames";
 
 interface WindowProps {
   title: string;
   children: React.ReactNode;
   defaultPosition?: { x: number; y: number };
-  defaultSize?: { width: number; height: number };
   onClose?: () => void;
+  icon?: ReactNode;
   isOpen: boolean;
-  icon: React.ReactNode;
+  minimize: () => void;
+  isMinimized: boolean;
+  taskbarButtonId: string;
 }
 
 export const BasicWindow = ({
@@ -21,26 +24,69 @@ export const BasicWindow = ({
   children,
   defaultPosition = { x: 100, y: 100 },
   onClose,
-  isOpen,
   icon,
+  isOpen,
+  minimize,
+  isMinimized,
+  taskbarButtonId,
 }: WindowProps) => {
   const [position, setPosition] = useState(defaultPosition);
   const [isDragging, setIsDragging] = useState(false);
+  const [isResizing, setIsResizing] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [zIndex, setZIndex] = useState(zIndexCounter.get());
+  const [minizedPosition, setMinizedPosition] = useState({ x: 0, y: 0 });
+
+  const windowRef = useRef<HTMLDivElement>(null);
+
+  const updateMinizedPosition = () => {
+    const taskbarButton = document.querySelector(
+      `[data-id="${taskbarButtonId}"]`,
+    );
+
+    if (taskbarButton) {
+      const rect = taskbarButton.getBoundingClientRect();
+
+      console.log(rect);
+
+      // const x = rect.x + rect.width / 2 - size.width / 2;
+      // const y = rect.y + rect.height / 2 - size.height / 2;
+
+      const windowRect = windowRef.current?.getBoundingClientRect();
+
+      const x = rect.x + rect.width / 2 - windowRect.width / 2;
+      const y = rect.y + rect.height / 2 - windowRect.height / 2;
+
+      setMinizedPosition({
+        x: x,
+        y: y,
+      });
+    }
+  };
 
   useEffect(() => {
     if (isOpen) {
       zIndexCounter.increment();
       setZIndex(zIndexCounter.get());
     }
-  }, [isOpen]);
 
-  const isOpenDebounced = useDebounce(isOpen, 300);
-  const isWindowOpen = isOpenDebounced || isOpen;
-  const showCloseAnimation = !isOpen && isOpenDebounced;
+    if (!isMinimized) {
+      zIndexCounter.increment();
+      setZIndex(zIndexCounter.get());
+    }
 
-  const windowRef = useRef<HTMLDivElement>(null);
+    if (isMinimized) {
+      updateMinizedPosition();
+    }
+  }, [isOpen, isMinimized]);
+
+  const [isWindowOpen, isWindowExpanded] = useBooleanForAnimation(
+    isOpen,
+    1,
+    300,
+  );
+
+  const disableDragging = isMinimized;
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -59,9 +105,10 @@ export const BasicWindow = ({
 
     const handleMouseUp = () => {
       setIsDragging(false);
+      setIsResizing(false);
     };
 
-    if (isDragging) {
+    if (isDragging || isResizing) {
       document.addEventListener("mousemove", handleMouseMove);
       document.addEventListener("mouseup", handleMouseUp);
     }
@@ -70,9 +117,11 @@ export const BasicWindow = ({
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isDragging, dragStart, position]);
+  }, [isDragging, isResizing, dragStart, position]);
 
   const handleDragStart = (e: React.MouseEvent) => {
+    if (disableDragging) return;
+
     if (
       e.target instanceof HTMLElement &&
       e.target.closest(".window-controls")
@@ -86,7 +135,9 @@ export const BasicWindow = ({
     });
   };
 
-  const handleMinimize = () => {};
+  const handleMinimize = () => {
+    minimize();
+  };
 
   const handleClose = () => {
     if (onClose) onClose();
@@ -101,10 +152,14 @@ export const BasicWindow = ({
         setZIndex(zIndexCounter.get());
       }}
       ref={windowRef}
-      className={`window expand-animation fixed overflow-hidden rounded-[22px] ${showCloseAnimation ? "retract-animation" : ""}`}
+      className={cx("window", "fixed", "overflow-hidden", "rounded-[22px]", {
+        "window-expand": isWindowExpanded,
+        "window-minimized": isMinimized,
+        "window-transition-off": isDragging || isResizing,
+      })}
       style={{
-        top: position.y,
-        left: position.x,
+        top: isMinimized ? minizedPosition.y : position.y,
+        left: isMinimized ? minizedPosition.x : position.x,
         zIndex: zIndex,
       }}
     >
@@ -112,7 +167,7 @@ export const BasicWindow = ({
         className="flex h-10 cursor-move items-center justify-between border-b-[4px] border-prettyBlue bg-white px-4 text-prettyBlue"
         onMouseDown={handleDragStart}
       >
-        <span className="flex items-center gap-2 truncate">
+        <span className="flex items-center gap-3 truncate">
           {icon}
           {title}
         </span>

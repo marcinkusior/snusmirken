@@ -35,6 +35,13 @@ export const ActivePrograms = () => {
   const isMapMinimized = useMapWindowStore((state) => state.isMinimized);
   const toggleMinimizeMap = useMapWindowStore((state) => state.toggleMinimize);
 
+  const isMinesweeperMinimized = useMinesweepurrrWindowStore(
+    (state) => state.isMinimized,
+  );
+  const toggleMinimizeMinesweepurrr = useMinesweepurrrWindowStore(
+    (state) => state.toggleMinimize,
+  );
+
   useEffect(() => {
     orderCounter++;
   }, [isMapOpen, isMinesweeperOpen, isPhotoFinderOpen]);
@@ -66,6 +73,9 @@ export const ActivePrograms = () => {
           }
           text="Minesweepurrr.exe"
           initialOrder={orderCounter}
+          onClick={toggleMinimizeMinesweepurrr}
+          isMinimized={isMinesweeperMinimized}
+          id="minesweeper-taskbar-button"
         />
       )}
 

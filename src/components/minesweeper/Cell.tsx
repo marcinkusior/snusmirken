@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { Flag, Bomb } from "lucide-react";
 import { Cell as CellType } from "./types";
-
+import "./Cell.css";
 interface CellProps {
   cell: CellType;
   onClick: () => void;
@@ -27,7 +27,7 @@ const Cell: React.FC<CellProps> = memo(({ cell, onClick, onRightClick }) => {
           <Bomb
             size={14}
             strokeWidth={3}
-            className="fill-red-400 stroke-prettyBlue"
+            className="fill-red-400 stroke-red-400"
           />
         );
       }
@@ -57,7 +57,7 @@ const Cell: React.FC<CellProps> = memo(({ cell, onClick, onRightClick }) => {
 
   return (
     <button
-      className={cellStyle}
+      className={`${cellStyle} cell`}
       onClick={onClick}
       onContextMenu={onRightClick}
     >

@@ -18,6 +18,9 @@ const useDesktopIcons = (tripFragments: TripFragment[]) => {
 
   const setSelectedTripFragment = usePhotoFinderStore().setSelectedTripFragment;
   const openMinesweepurrr = useMinesweepurrrWindowStore().open;
+  const unMinimizeMinesweepurrr = useMinesweepurrrWindowStore(
+    (state) => state.unMinimize,
+  );
 
   return [
     {
@@ -34,6 +37,7 @@ const useDesktopIcons = (tripFragments: TripFragment[]) => {
       icon: <Bomb size={60} strokeWidth={1.5} fill="white" />,
       onDoubleClick: () => {
         openMinesweepurrr();
+        unMinimizeMinesweepurrr();
       },
     },
 

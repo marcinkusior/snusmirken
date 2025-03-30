@@ -1,0 +1,7 @@
+.cell {
+  transition: all 0.2s cubic-bezier(0.5, 1, 0.2, 1);
+}
+
+.cell:active {
+  box-shadow: none;
+}
