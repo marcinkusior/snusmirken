@@ -54,8 +54,8 @@ export const ActivePrograms = () => {
             <MapIcon
               size={16}
               strokeWidth={2}
-              fill="#3d04fc"
-              stroke="#3d04fc"
+              fill="var(--primary-color)"
+              stroke="var(--primary-color)"
             />
           }
           text="Map.exe"
@@ -69,7 +69,12 @@ export const ActivePrograms = () => {
       {isMinesweeperOpen && (
         <TaskbarButton
           icon={
-            <Bomb size={16} strokeWidth={2} fill="#3d04fc" stroke="#3d04fc" />
+            <Bomb
+              size={16}
+              strokeWidth={2}
+              fill="var(--primary-color)"
+              stroke="var(--primary-color)"
+            />
           }
           text="Minesweepurrr.exe"
           initialOrder={orderCounter}
@@ -82,7 +87,12 @@ export const ActivePrograms = () => {
       {isPhotoFinderOpen && (
         <TaskbarButton
           icon={
-            <Folder size={16} strokeWidth={2} fill="#3d04fc" stroke="#3d04fc" />
+            <Folder
+              size={16}
+              strokeWidth={2}
+              fill="var(--primary-color)"
+              stroke="var(--primary-color)"
+            />
           }
           text={selectedTripFragment?.name ?? ""}
           initialOrder={orderCounter}

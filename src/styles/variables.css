@@ -1,0 +1,18 @@
+:root {
+  --primary-color: #272727;
+  --background-color: white;
+  --window-shadow-color: black;
+  --window-background-color: white;
+}
+
+.minesweeper-window-card {
+  --window-background-color: black;
+}
+
+.minesweeper-window-card .window-header {
+  --window-background-color: white;
+}
+
+.map-window-card .window-header {
+  --window-background-color: salmon;
+}

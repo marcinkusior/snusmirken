@@ -1,0 +1,101 @@
+/* Retro Color Palettes */
+
+/* 1. Synthwave Sunset */
+:root[data-theme="synthwave"] {
+  --primary-color: #ff00ff;
+  --background-color: #2a2139;
+  --window-shadow-color: #ff00ff;
+  --window-background-color: #2a2139;
+  --accent-color: #00ffff;
+  --text-color: #ffffff;
+}
+
+/* 2. Vintage Mac */
+:root[data-theme="vintage-mac"] {
+  --primary-color: #4a90e2;
+  --background-color: #f5f5f5;
+  --window-shadow-color: #4a90e2;
+  --window-background-color: #ffffff;
+  --accent-color: #e2a74a;
+  --text-color: #333333;
+}
+
+/* 3. DOS Green */
+:root[data-theme="dos-green"] {
+  --primary-color: #00ff00;
+  --background-color: #000000;
+  --window-shadow-color: #00ff00;
+  --window-background-color: #000000;
+  --accent-color: #00ff00;
+  --text-color: #00ff00;
+}
+
+/* 4. Commodore 64 */
+:root[data-theme="c64"] {
+  --primary-color: #6c5ce7;
+  --background-color: #2c3e50;
+  --window-shadow-color: #6c5ce7;
+  --window-background-color: #34495e;
+  --accent-color: #00b894;
+  --text-color: #ffffff;
+}
+
+/* 5. Windows 95 */
+:root[data-theme="win95"] {
+  --primary-color: #000080;
+  --background-color: #c0c0c0;
+  --window-shadow-color: #808080;
+  --window-background-color: #ffffff;
+  --accent-color: #800000;
+  --text-color: #000000;
+}
+
+/* 6. Apple II */
+:root[data-theme="apple-ii"] {
+  --primary-color: #ff0000;
+  --background-color: #000000;
+  --window-shadow-color: #ff0000;
+  --window-background-color: #000000;
+  --accent-color: #00ff00;
+  --text-color: #ffffff;
+}
+
+/* 7. Atari 2600 */
+:root[data-theme="atari"] {
+  --primary-color: #ff6b6b;
+  --background-color: #4ecdc4;
+  --window-shadow-color: #ff6b6b;
+  --window-background-color: #ffffff;
+  --accent-color: #45b7d1;
+  --text-color: #2c3e50;
+}
+
+/* 8. Game Boy */
+:root[data-theme="gameboy"] {
+  --primary-color: #0f380f;
+  --background-color: #9bbc0f;
+  --window-shadow-color: #0f380f;
+  --window-background-color: #9bbc0f;
+  --accent-color: #306230;
+  --text-color: #0f380f;
+}
+
+/* 9. ZX Spectrum */
+:root[data-theme="zx-spectrum"] {
+  --primary-color: #ff0000;
+  --background-color: #000000;
+  --window-shadow-color: #ff0000;
+  --window-background-color: #000000;
+  --accent-color: #00ff00;
+  --text-color: #ffffff;
+}
+
+/* 10. Amiga */
+:root[data-theme="amiga"] {
+  --primary-color: #0000ff;
+  --background-color: #ffffff;
+  --window-shadow-color: #0000ff;
+  --window-background-color: #ffffff;
+  --accent-color: #ff0000;
+  --text-color: #000000;
+}

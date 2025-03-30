@@ -9,14 +9,14 @@ interface CellProps {
 }
 
 const numberColors = {
-  1: "text-prettyBlue",
-  2: "text-prettyBlue",
-  3: "text-prettyBlue",
-  4: "text-prettyBlue",
-  5: "text-prettyBlue",
-  6: "text-prettyBlue",
-  7: "text-prettyBlue",
-  8: "text-prettyBlue",
+  1: "text-primaryColor",
+  2: "text-primaryColor",
+  3: "text-primaryColor",
+  4: "text-primaryColor",
+  5: "text-primaryColor",
+  6: "text-primaryColor",
+  7: "text-primaryColor",
+  8: "text-primaryColor",
 };
 
 const Cell: React.FC<CellProps> = memo(({ cell, onClick, onRightClick }) => {
@@ -45,15 +45,15 @@ const Cell: React.FC<CellProps> = memo(({ cell, onClick, onRightClick }) => {
     }
 
     if (cell.isFlagged) {
-      return <Flag size={14} strokeWidth={3} className="text-prettyBlue" />;
+      return <Flag size={14} strokeWidth={3} className="text-primaryColor" />;
     }
 
     return null;
   };
 
   const cellStyle = cell.isRevealed
-    ? "w-7 h-7 flex items-center border-[1px] border-prettyBlue/25 justify-center bg-white rounded-[5px] text-sm font-bold"
-    : "w-7 h-7 flex items-center border-[1px] shadow-sm border-prettyBlue justify-center bg-prettyBlue/10 rounded-[5px] text-sm font-bold";
+    ? "w-7 h-7 flex items-center border-[1px] border-primaryColor/25 justify-center bg-windowBackgroundColor rounded-[5px] text-sm font-bold"
+    : "w-7 h-7 flex items-center border-[1px] shadow-sm border-primaryColor justify-center bg-primaryColor/10 rounded-[5px] text-sm font-bold";
 
   return (
     <button

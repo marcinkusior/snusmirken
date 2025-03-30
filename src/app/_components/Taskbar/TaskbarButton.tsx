@@ -34,20 +34,20 @@ export const TaskbarButton = ({
         "gap-2",
         "rounded-[25px]",
         "border-[1px]",
-        "border-prettyBlue",
+        "border-primaryColor",
         "animate-roll-in",
         "px-4",
         "py-1",
         "shadow-inner",
         {
-          "bg-white shadow-sm": isMinimized,
-          "bg-prettyBlue/10": !isMinimized,
+          "shadow-sm": isMinimized,
+          "taskbar-button--pushed": !isMinimized,
         },
       )}
       onClick={onClick}
     >
       {icon}
-      <span className="text-sm text-prettyBlue">{text}</span>
+      <span className="text-primaryColor text-sm">{text}</span>
     </div>
   );
 };

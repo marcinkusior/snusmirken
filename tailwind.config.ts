@@ -14,6 +14,11 @@ export default {
         customOrange: "#ffaca1",
         customPink: "#fce2f0",
         prettyBlue: "#3d04fc",
+
+        primaryColor: "var(--primary-color)",
+        backgroundColor: "var(--background-color)",
+        shadowColor: "var(--shadow-color)",
+        windowBackgroundColor: "var(--window-background-color)",
       },
       animation: {
         "interval-rotate":

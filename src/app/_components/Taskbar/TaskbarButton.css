@@ -10,3 +10,7 @@
 .animate-roll-in {
   animation: roll-in 0.4s cubic-bezier(0.5, 1, 0.2, 1);
 }
+
+.taskbar-button--pushed {
+  background-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
+}

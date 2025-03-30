@@ -1,9 +1,9 @@
 .window {
-  border: 2px solid #3d04fc;
+  border: 2px solid var(--primary-color);
   box-shadow:
-    #3d04fc 5.8px 5.8px 0px 0px,
-    #fce2f0dd -1.2px -1.2px 0px 0px;
-  background: white;
+    var(--window-shadow-color) 5.8px 5.8px 0px 0px,
+    var(--background-color) -1.2px -1.2px 0px 0px;
+  background: var(--window-background-color);
   position: absolute;
 
   transform: scale(0.2);
@@ -16,11 +16,11 @@
 }
 
 .shadow-bl {
-  box-shadow: #3d04fc 5.8px 5.8px 0px 0px;
+  box-shadow: var(--primary-color) 5.8px 5.8px 0px 0px;
 }
 
 .shadow-sm {
-  box-shadow: #3d04fc 1.3 1.3 0px 0px;
+  box-shadow: var(--primary-color) 1.3px 1.3px 0px 0px;
 }
 
 .window-expand {

@@ -76,9 +76,17 @@ const TripPage = () => {
         className="mx-auto h-[100vh]"
       >
         <DesktopIcons />
-        <MinesweeperWindow />
-        <MapWindow posts={posts} />
-        <PhotoFinderWindow />
+        <div>
+          <div className="minesweeper-window-card">
+            <MinesweeperWindow />
+          </div>
+          <div className="map-window-card">
+            <MapWindow posts={posts} />
+          </div>
+          <div className="photo-finder-window-card">
+            <PhotoFinderWindow />
+          </div>
+        </div>
       </div>
       <Taskbar />
     </>
