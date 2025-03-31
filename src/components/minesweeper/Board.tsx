@@ -12,7 +12,10 @@ const Board: React.FC<BoardProps> = memo(
   ({ board, onCellClick, onCellRightClick }) => {
     return (
       <div className="mt-2">
-        <div className="bg-windowBackgroundColor grid grid-cols-9 gap-1">
+        <div
+          className="grid-cols grid gap-1 bg-windowBackgroundColor"
+          style={{ gridTemplateColumns: `repeat(${board[0]?.length}, 1fr)` }}
+        >
           {board.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <Cell

@@ -1,16 +1,29 @@
-@keyframes roll-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.taskbar-button-container {
+  /* opacity: 0; */
+  width: 0;
+  transition: width 0.4s cubic-bezier(0.5, 1, 0.2, 1);
+  overflow: hidden;
+  padding-right: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
-.animate-roll-in {
-  animation: roll-in 0.4s cubic-bezier(0.5, 1, 0.2, 1);
+.taskbar-button-container--visible {
+  /* opacity: 1; */
+  width: 200px;
+  padding-right: 10px;
+}
+
+.taskbar-button {
+  text-overflow: clip;
+  transition: all 0.3s cubic-bezier(0.5, 1, 0.2, 1);
 }
 
 .taskbar-button--pushed {
   background-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
+}
+
+.taskbar-button__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

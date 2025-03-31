@@ -4,6 +4,7 @@ import { generateBoard, revealCell, flagCell, checkWin } from "./gameLogic";
 import { Cell, GameState } from "./types";
 import { Header } from "./Header";
 import { Board } from "./Board";
+import FileMenu from "../FileMenu/FileMenu";
 
 export const Minesweeper = () => {
   const [board, setBoard] = useState<Cell[][]>([]);
@@ -13,7 +14,7 @@ export const Minesweeper = () => {
   const [intervalId, setIntervalId] = useState<number | null>(null);
 
   const initializeGame = useCallback(() => {
-    const newBoard = generateBoard(9, 9, 10);
+    const newBoard = generateBoard(11, 11, 21);
     setBoard(newBoard);
     setGameState("playing");
     setTimeElapsed(0);
@@ -92,21 +93,43 @@ export const Minesweeper = () => {
     return 10 - result;
   }, [board]);
 
+  const menus = [
+    {
+      label: "File",
+      options: [
+        { label: "New", action: () => console.log("New File") },
+        { label: "Open", action: () => console.log("Open File") },
+        { label: "Save", action: () => console.log("Save File") },
+      ],
+    },
+    {
+      label: "Edit",
+      options: [
+        { label: "Undo", action: () => console.log("Undo") },
+        { label: "Redo", action: () => console.log("Redo") },
+      ],
+    },
+  ];
+
   return (
-    <div className="flex items-center justify-center">
-      <div className="border-windowBackgroundColor border-b-[3px] border-l-[3px] border-r-[3px] border-t-[3px]">
-        <div className="bg-windowBackgroundColor p-2">
-          <Header
-            mineCount={mineCount}
-            timeElapsed={timeElapsed}
-            gameState={gameState}
-            onReset={initializeGame}
-          />
-          <Board
-            board={board}
-            onCellClick={handleCellClick}
-            onCellRightClick={handleCellRightClick}
-          />
+    <div>
+      <FileMenu menus={menus} />
+
+      <div className="flex items-center justify-center">
+        <div className="border-b-[3px] border-l-[3px] border-r-[3px] border-t-[3px] border-windowBackgroundColor">
+          <div className="bg-windowBackgroundColor p-2">
+            <Header
+              mineCount={mineCount}
+              timeElapsed={timeElapsed}
+              gameState={gameState}
+              onReset={initializeGame}
+            />
+            <Board
+              board={board}
+              onCellClick={handleCellClick}
+              onCellRightClick={handleCellRightClick}
+            />
+          </div>
         </div>
       </div>
     </div>

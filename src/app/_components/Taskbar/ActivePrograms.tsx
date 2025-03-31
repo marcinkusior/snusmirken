@@ -47,60 +47,57 @@ export const ActivePrograms = () => {
   }, [isMapOpen, isMinesweeperOpen, isPhotoFinderOpen]);
 
   return (
-    <div className="flex gap-2">
-      {isMapOpen && (
-        <TaskbarButton
-          icon={
-            <MapIcon
-              size={16}
-              strokeWidth={2}
-              fill="var(--primary-color)"
-              stroke="var(--primary-color)"
-            />
-          }
-          text="Map.exe"
-          onClick={toggleMinimizeMap}
-          isMinimized={isMapMinimized}
-          initialOrder={orderCounter}
-          id="map-taskbar-button"
-        />
-      )}
+    <div className="flex">
+      <TaskbarButton
+        isOpen={isMapOpen}
+        icon={
+          <MapIcon
+            size={16}
+            strokeWidth={2}
+            fill="var(--primary-color)"
+            stroke="var(--primary-color)"
+          />
+        }
+        text="Map.exe"
+        onClick={toggleMinimizeMap}
+        isMinimized={isMapMinimized}
+        order={orderCounter}
+        id="map-taskbar-button"
+      />
 
-      {isMinesweeperOpen && (
-        <TaskbarButton
-          icon={
-            <Bomb
-              size={16}
-              strokeWidth={2}
-              fill="var(--primary-color)"
-              stroke="var(--primary-color)"
-            />
-          }
-          text="Minesweepurrr.exe"
-          initialOrder={orderCounter}
-          onClick={toggleMinimizeMinesweepurrr}
-          isMinimized={isMinesweeperMinimized}
-          id="minesweeper-taskbar-button"
-        />
-      )}
+      <TaskbarButton
+        isOpen={isMinesweeperOpen}
+        icon={
+          <Bomb
+            size={16}
+            strokeWidth={2}
+            fill="var(--primary-color)"
+            stroke="var(--primary-color)"
+          />
+        }
+        text="Minesweepurrr.exe"
+        order={orderCounter}
+        onClick={toggleMinimizeMinesweepurrr}
+        isMinimized={isMinesweeperMinimized}
+        id="minesweeper-taskbar-button"
+      />
 
-      {isPhotoFinderOpen && (
-        <TaskbarButton
-          icon={
-            <Folder
-              size={16}
-              strokeWidth={2}
-              fill="var(--primary-color)"
-              stroke="var(--primary-color)"
-            />
-          }
-          text={selectedTripFragment?.name ?? ""}
-          initialOrder={orderCounter}
-          isMinimized={isPhotoFinderMinimized}
-          onClick={toggleMinimizePhotoFinder}
-          id="photo-finder-taskbar-button"
-        />
-      )}
+      <TaskbarButton
+        isOpen={isPhotoFinderOpen}
+        icon={
+          <Folder
+            size={16}
+            strokeWidth={2}
+            fill="var(--primary-color)"
+            stroke="var(--primary-color)"
+          />
+        }
+        text={selectedTripFragment?.name ?? ""}
+        order={orderCounter}
+        isMinimized={isPhotoFinderMinimized}
+        onClick={toggleMinimizePhotoFinder}
+        id="photo-finder-taskbar-button"
+      />
     </div>
   );
 };

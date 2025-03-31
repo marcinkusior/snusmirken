@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useLayoutEffect, useState } from "react";
 import cx from "classnames";
 import "./TaskbarButton.css";
 import { useBooleanForAnimation } from "~/app/utils/useBooleanForAnimation";
@@ -8,8 +8,9 @@ interface TaskbarButtonProps {
   text: string;
   onClick: () => void;
   isMinimized: boolean;
-  initialOrder: number;
+  order: number;
   id: string;
+  isOpen: boolean;
 }
 
 export const TaskbarButton = ({
@@ -17,38 +18,64 @@ export const TaskbarButton = ({
   text,
   onClick,
   isMinimized,
-  initialOrder,
+  order,
   id,
+  isOpen,
 }: TaskbarButtonProps) => {
-  const [order] = useState(initialOrder);
+  const [updateOrder, setUpdateOrder] = useState(true);
+  const [currentOrder, setOrder] = useState(order);
+
+  const [isActuallyOpen, isVisible] = useBooleanForAnimation(isOpen, 1, 300);
+
+  useLayoutEffect(() => {
+    if (isOpen && updateOrder) {
+      setUpdateOrder(false);
+      setOrder(order);
+    }
+
+    if (!isOpen) {
+      setUpdateOrder(true);
+    }
+  }, [isOpen]);
+
+  if (!isActuallyOpen) return null;
 
   return (
     <div
-      data-id={id}
-      style={{ order }}
-      className={cx(
-        "nice-transition",
-        "mr-[5px]",
-        "flex",
-        "h-full",
-        "items-center",
-        "gap-2",
-        "rounded-[25px]",
-        "border-[1px]",
-        "border-primaryColor",
-        "animate-roll-in",
-        "px-4",
-        "py-[5px]",
-        "shadow-inner",
-        {
-          "shadow-sm": isMinimized,
-          "taskbar-button--pushed": !isMinimized,
-        },
-      )}
-      onClick={onClick}
+      style={{ order: currentOrder }}
+      className={cx("taskbar-button-container", {
+        "taskbar-button-container--visible": isVisible,
+      })}
     >
-      {icon}
-      <span className="text-xs text-primaryColor">{text}</span>
+      <div>
+        <div
+          data-id={id}
+          className={cx(
+            "taskbar-button",
+            "flex",
+            "h-full",
+            "items-center",
+            "gap-2",
+            "rounded-[25px]",
+            "border-[1px]",
+            "border-primaryColor",
+            "px-4",
+            "py-[5px]",
+            "taskbar-button",
+            {
+              "shadow-sm": isMinimized,
+              "taskbar-button--pushed": !isMinimized,
+              "taskbar-button--visible": isVisible,
+            },
+          )}
+          onClick={onClick}
+        >
+          <div className="flex-shrink-0">{icon}</div>
+          <div className="taskbar-button__text text-xs text-primaryColor">
+            {text}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

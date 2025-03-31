@@ -19,6 +19,7 @@ export default {
         backgroundColor: "var(--background-color)",
         shadowColor: "var(--shadow-color)",
         windowBackgroundColor: "var(--window-background-color)",
+        borderColor: "var(--border-color)",
       },
       animation: {
         "interval-rotate":

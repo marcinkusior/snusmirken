@@ -164,7 +164,7 @@ export const BasicWindow = ({
       }}
     >
       <div
-        className="window-header bg-windowBackgroundColor text-primaryColor border-primaryColor flex h-10 cursor-move items-center justify-between border-b-[4px] px-4"
+        className="window-header flex h-10 cursor-move items-center justify-between border-b-[4px] border-primaryColor bg-windowBackgroundColor px-4 text-primaryColor"
         onMouseDown={handleDragStart}
       >
         <span className="flex items-center gap-3 truncate">
@@ -188,7 +188,7 @@ export const BasicWindow = ({
         </div>
       </div>
 
-      <div className="h-[calc(100%-2.5rem)] overflow-auto p-4">{children}</div>
+      <div className="h-[calc(100%-2.5rem)] overflow-auto">{children}</div>
     </div>
   );
 };

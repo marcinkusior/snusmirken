@@ -1,6 +1,7 @@
 /*  2 */
 :root {
   --primary-color: #272727;
+  --border-color: #272727;
   --background-color: rgb(255, 254, 246);
   --window-shadow-color: #272727;
   --window-background-color: white;
