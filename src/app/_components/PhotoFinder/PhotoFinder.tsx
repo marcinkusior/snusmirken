@@ -90,14 +90,14 @@ export const PhotoFinder = ({
 
             <br />
 
-            <button className="text-primaryColor">Show on Map</button>
+            <button className="text-borderColor">Show on Map</button>
           </div>
           <div className="photo-finder-grid__selection overflow-y-hidden overflow-x-scroll">
             <div className="flex h-[100%] flex-row items-center">
               {posts.map((post, index) => (
                 <div
                   onClick={() => setSelectedPost(post)}
-                  className={`p flex-shrink-0 rounded-md border-2 p-1 ${post.id === selectedPost?.id ? "border-primaryColor" : "border-transparent"}`}
+                  className={`p flex-shrink-0 rounded-md border-2 p-1 ${post.id === selectedPost?.id ? "border-borderColor" : "border-transparent"}`}
                   key={post.id}
                 >
                   <img

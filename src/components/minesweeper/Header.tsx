@@ -26,14 +26,14 @@ const Header: React.FC<HeaderProps> = memo(
     };
 
     return (
-      <div className="bg-windowBackgroundColor mb-[15px] mt-[-5px] flex items-center justify-between">
-        <div className="text-primaryColor px-2 text-2xl">
+      <div className="mb-[15px] mt-[-5px] flex items-center justify-between bg-windowBackgroundColor">
+        <div className="text-borderColor px-2 text-2xl">
           {formatNumber(mineCount)}
         </div>
-        <button onClick={onReset} className="border-primaryColor text-2xl">
+        <button onClick={onReset} className="border-borderColor text-2xl">
           {getFaceEmoji()}
         </button>
-        <div className="text-primaryColor px-2 text-2xl">
+        <div className="text-borderColor px-2 text-2xl">
           {formatNumber(Math.min(timeElapsed, 999))}
         </div>
       </div>

@@ -48,14 +48,14 @@ const FileMenu: React.FC<FileMenuProps> = ({ menus }) => {
           <button
             onClick={() => setIsMenuOpen(true)}
             onMouseEnter={() => setOpenMenuIndex(index)}
-            className="bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-200"
+            className="border-borderColor border-r bg-white px-4 py-[6px] text-sm font-medium text-gray-700 hover:bg-gray-200"
           >
             {menu.label}
           </button>
 
           {/* Dropdown Options */}
           {openMenuIndex === index && isMenuOpen && (
-            <div className="absolute left-0 mt-1 w-48 rounded-md border border-gray-300 bg-white shadow-lg">
+            <div className="border-borderColor absolute left-[-1px] w-48 overflow-hidden rounded-bl-[10px] rounded-br-[10px] border bg-white shadow-lg">
               {menu.options.map((option, optionIndex) => (
                 <button
                   key={optionIndex}

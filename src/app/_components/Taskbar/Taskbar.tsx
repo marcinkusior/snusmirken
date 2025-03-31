@@ -15,7 +15,7 @@ import { ActivePrograms } from "./ActivePrograms";
 
 function MenuItem({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <div className="hover:bg-primaryColor flex cursor-pointer items-center gap-3 rounded rounded-[20px] p-2 hover:text-white">
+    <div className="hover:bg-borderColor flex cursor-pointer items-center gap-3 rounded rounded-[20px] p-2 hover:text-white">
       {icon}
       <span>{label}</span>
     </div>
@@ -55,10 +55,10 @@ export const Taskbar = () => {
       {isStartMenuOpen && (
         <div
           ref={startMenuRef}
-          className="border-primaryColor bg-windowBackgroundColor absolute bottom-[86px] left-[1.5vw] z-[99999] w-80 overflow-hidden rounded-[20px] rounded-tr-lg border-2 shadow-xl"
+          className="border-borderColor absolute bottom-[86px] left-[1.5vw] z-[99999] w-80 overflow-hidden rounded-[20px] rounded-tr-lg border-2 bg-windowBackgroundColor shadow-xl"
         >
           {/* User Profile Section */}
-          <div className="text-primaryColor border-primaryColor flex items-center gap-4 border-b-[2px] p-4">
+          <div className="text-borderColor border-borderColor flex items-center gap-4 border-b-[2px] p-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-full">
               <img
                 src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=100&h=100"
@@ -87,16 +87,16 @@ export const Taskbar = () => {
           </div>
         </div>
       )}
-      <div className="shadow-bl border-primaryColor bg-windowBackgroundColor absolute bottom-[36px] left-[1vw] flex h-[46px] w-[98vw] items-center justify-between rounded-[40px] border-[2px] pb-1 pl-1 pr-3 pt-1">
+      <div className="shadow-bl border-borderColor absolute bottom-[36px] left-[1vw] flex h-[46px] w-[98vw] items-center justify-between rounded-[40px] border-[2px] bg-windowBackgroundColor pb-1 pl-1 pr-3 pt-1">
         <button
           ref={startButtonRef}
           onClick={() => setIsStartMenuOpen(!isStartMenuOpen)}
-          className={`br-2 text-primaryColor flex flex-grow-0 items-center gap-2 px-2 py-1`}
+          className={`br-2 text-borderColor flex flex-grow-0 items-center gap-2 px-2 py-1`}
         >
           <span
             className={cx(
               "p bold mr-[5px] rounded-[19px] border-2 border-transparent p-[3px] pl-3 pr-3 text-xs",
-              isStartMenuOpen ? "bg-primaryColor text-white" : "",
+              isStartMenuOpen ? "bg-borderColor text-white" : "",
             )}
           >
             Start

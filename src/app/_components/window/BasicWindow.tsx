@@ -164,7 +164,7 @@ export const BasicWindow = ({
       }}
     >
       <div
-        className="window-header flex h-10 cursor-move items-center justify-between border-b-[4px] border-primaryColor bg-windowBackgroundColor px-4 text-primaryColor"
+        className="window-header border-borderColor text-borderColor flex h-10 cursor-move items-center justify-between border-b-[4px] bg-windowBackgroundColor px-4"
         onMouseDown={handleDragStart}
       >
         <span className="flex items-center gap-3 truncate">

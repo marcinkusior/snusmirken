@@ -21,7 +21,7 @@ export const Photo = ({
         className={`user-select-none draggable-post w-[400px] overflow-hidden`}
       >
         <div className="flex flex-col items-start justify-between gap-2">
-          <p className="text-primaryColor flex-1 p-1">{text}</p>
+          <p className="text-borderColor flex-1 p-1">{text}</p>
 
           <div className="relative">
             <img src={imageUrl} alt="" />

@@ -58,7 +58,7 @@ export const TaskbarButton = ({
             "gap-2",
             "rounded-[25px]",
             "border-[1px]",
-            "border-primaryColor",
+            "border-borderColor",
             "px-4",
             "py-[5px]",
             "taskbar-button",
@@ -71,7 +71,7 @@ export const TaskbarButton = ({
           onClick={onClick}
         >
           <div className="flex-shrink-0">{icon}</div>
-          <div className="taskbar-button__text text-xs text-primaryColor">
+          <div className="taskbar-button__text text-borderColor text-xs">
             {text}
           </div>
         </div>

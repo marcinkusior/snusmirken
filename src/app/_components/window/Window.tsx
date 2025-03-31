@@ -203,7 +203,7 @@ export const Window = ({
       }}
     >
       <div
-        className="window-header bg-windowBackgroundColor border-primaryColor text-primaryColor flex h-10 cursor-move items-center justify-between border-b-[4px] px-4"
+        className="window-header border-borderColor text-borderColor flex h-10 cursor-move items-center justify-between border-b-[4px] bg-windowBackgroundColor px-4"
         onMouseDown={handleDragStart}
         onDoubleClick={handleMaximize}
       >
@@ -247,7 +247,7 @@ export const Window = ({
           className="absolute bottom-0 right-0 h-4 w-4 cursor-se-resize"
           onMouseDown={handleResizeStart}
         >
-          <div className="bg-primaryColor absolute bottom-1 left-[3px] top-[-1px] h-[11px] w-[4px] rotate-45 rounded-full" />
+          <div className="bg-borderColor absolute bottom-1 left-[3px] top-[-1px] h-[11px] w-[4px] rotate-45 rounded-full" />
         </div>
       )}
     </div>
