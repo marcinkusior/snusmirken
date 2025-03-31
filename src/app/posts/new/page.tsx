@@ -46,23 +46,23 @@ const NewPostForm: React.FC = () => {
         <div className="mb-4">
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs font-medium text-gray-700"
           >
             Name
           </label>
           <input
             id="name"
             {...register("name")}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-xs"
           />
           {errors.name && (
-            <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
+            <p className="mt-1 text-xs text-red-500">{errors.name.message}</p>
           )}
         </div>
         <div className="mb-4">
           <label
             htmlFor="latitude"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs font-medium text-gray-700"
           >
             Latitude
           </label>
@@ -71,10 +71,10 @@ const NewPostForm: React.FC = () => {
             type="number"
             step="any"
             {...register("latitude", { valueAsNumber: true })}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-xs"
           />
           {errors.latitude && (
-            <p className="mt-1 text-sm text-red-500">
+            <p className="mt-1 text-xs text-red-500">
               {errors.latitude.message}
             </p>
           )}
@@ -82,7 +82,7 @@ const NewPostForm: React.FC = () => {
         <div className="mb-4">
           <label
             htmlFor="longitude"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs font-medium text-gray-700"
           >
             Longitude
           </label>
@@ -91,10 +91,10 @@ const NewPostForm: React.FC = () => {
             type="number"
             step="any"
             {...register("longitude", { valueAsNumber: true })}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-xs"
           />
           {errors.longitude && (
-            <p className="mt-1 text-sm text-red-500">
+            <p className="mt-1 text-xs text-red-500">
               {errors.longitude.message}
             </p>
           )}
@@ -103,7 +103,7 @@ const NewPostForm: React.FC = () => {
         {/* <div className="mb-4">
           <label
             htmlFor="date"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs font-medium text-gray-700"
           >
             Date
           </label>
@@ -111,17 +111,17 @@ const NewPostForm: React.FC = () => {
             id="date"
             type="datetime-local"
             {...register("date")}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-xs"
           />
           {errors.date && (
-            <p className="mt-1 text-sm text-red-500">{errors.date.message}</p>
+            <p className="mt-1 text-xs text-red-500">{errors.date.message}</p>
           )}
         </div> */}
 
         <div className="mb-4">
           <label
             htmlFor="tripId"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs font-medium text-gray-700"
           >
             Trip
           </label>
@@ -130,7 +130,7 @@ const NewPostForm: React.FC = () => {
             disabled={isLoadingTrips}
             id="tripId"
             {...register("tripId", { valueAsNumber: true })}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-xs"
           >
             {trips?.map((trip) => (
               <option key={trip.id} value={trip.id}>
@@ -139,13 +139,13 @@ const NewPostForm: React.FC = () => {
             ))}
           </select>
           {errors.tripId && (
-            <p className="mt-1 text-sm text-red-500">{errors.tripId.message}</p>
+            <p className="mt-1 text-xs text-red-500">{errors.tripId.message}</p>
           )}
         </div>
         <div className="mb-4">
           <label
             htmlFor="tripFragmentId"
-            className="block text-sm font-medium text-gray-700"
+            className="block text-xs font-medium text-gray-700"
           >
             TripFragment
           </label>
@@ -154,7 +154,7 @@ const NewPostForm: React.FC = () => {
             disabled={isLoadingTripFragments}
             id="tripFragmentId"
             {...register("tripFragmentId", { valueAsNumber: true })}
-            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-xs"
           >
             {tripFragments?.map((tripFragment) => (
               <option key={tripFragment.id} value={tripFragment.id}>
@@ -163,7 +163,7 @@ const NewPostForm: React.FC = () => {
             ))}
           </select>
           {errors.tripFragmentId && (
-            <p className="mt-1 text-sm text-red-500">
+            <p className="mt-1 text-xs text-red-500">
               {errors.tripFragmentId.message}
             </p>
           )}

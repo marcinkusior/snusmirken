@@ -1,6 +1,7 @@
 import { ReactNode, useState } from "react";
 import cx from "classnames";
 import "./TaskbarButton.css";
+import { useBooleanForAnimation } from "~/app/utils/useBooleanForAnimation";
 
 interface TaskbarButtonProps {
   icon: ReactNode;
@@ -37,7 +38,7 @@ export const TaskbarButton = ({
         "border-primaryColor",
         "animate-roll-in",
         "px-4",
-        "py-1",
+        "py-[5px]",
         "shadow-inner",
         {
           "shadow-sm": isMinimized,
@@ -47,7 +48,7 @@ export const TaskbarButton = ({
       onClick={onClick}
     >
       {icon}
-      <span className="text-primaryColor text-sm">{text}</span>
+      <span className="text-xs text-primaryColor">{text}</span>
     </div>
   );
 };

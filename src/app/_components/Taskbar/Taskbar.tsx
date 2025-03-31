@@ -95,7 +95,7 @@ export const Taskbar = () => {
         >
           <span
             className={cx(
-              "p bold mr-[5px] rounded-[19px] border-2 border-transparent p-[3px] pl-3 pr-3 text-sm",
+              "p bold mr-[5px] rounded-[19px] border-2 border-transparent p-[3px] pl-3 pr-3 text-xs",
               isStartMenuOpen ? "bg-primaryColor text-white" : "",
             )}
           >
@@ -109,7 +109,7 @@ export const Taskbar = () => {
 
         {/* System Tray */}
         <div className="flex flex-grow-0 items-center gap-2 px-2 py-1">
-          <span className="text-sm">{currentTime}</span>
+          <span className="text-xs">{currentTime}</span>
         </div>
       </div>
       ;

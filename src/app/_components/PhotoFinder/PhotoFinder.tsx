@@ -56,7 +56,7 @@ export const PhotoFinder = ({
             <div className="flex-">{`${selectedPost?.name}.webp`}</div>
             <div className="text-xs text-slate-400">WebP Image - 204kB</div>
             <br />
-            <div className="mb-[4px] text-sm text-slate-400">Information</div>
+            <div className="mb-[4px] text-xs text-slate-400">Information</div>
 
             <div className="mb-[4px] flex justify-between border-b border-slate-300 text-xs text-slate-400">
               <div>Created at</div>

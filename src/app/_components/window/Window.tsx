@@ -20,6 +20,7 @@ interface WindowProps {
   minimize: () => void;
   isMinimized: boolean;
   taskbarButtonId: string;
+  padding?: string;
 }
 
 export const Window = ({
@@ -33,6 +34,7 @@ export const Window = ({
   minimize,
   isMinimized,
   taskbarButtonId,
+  padding = "16px",
 }: WindowProps) => {
   const [position, setPosition] = useState(defaultPosition);
   const [size, setSize] = useState(defaultSize);
@@ -150,11 +152,19 @@ export const Window = ({
   };
 
   const handleMaximize = () => {
+    const maximizedPadding = 10;
+
     if (!isMaximized) {
       setOriginalSize(size);
       setOriginalPosition(position);
-      setSize({ width: window.innerWidth, height: window.innerHeight });
-      setPosition({ x: 0, y: 0 });
+      setSize({
+        width: window.innerWidth - maximizedPadding * 2,
+        height: window.innerHeight - maximizedPadding * 2,
+      });
+      setPosition({
+        x: maximizedPadding,
+        y: maximizedPadding,
+      });
     } else {
       setSize(originalSize);
       setPosition(originalPosition);
@@ -225,7 +235,12 @@ export const Window = ({
         </div>
       </div>
 
-      <div className="h-[calc(100%-2.5rem)] overflow-auto p-4">{children}</div>
+      <div
+        className={`h-[calc(100%-2.5rem)] overflow-auto`}
+        style={{ padding }}
+      >
+        {children}
+      </div>
 
       {!isMaximized && (
         <div

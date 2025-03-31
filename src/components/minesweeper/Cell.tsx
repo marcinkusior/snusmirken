@@ -52,8 +52,8 @@ const Cell: React.FC<CellProps> = memo(({ cell, onClick, onRightClick }) => {
   };
 
   const cellStyle = cell.isRevealed
-    ? "w-7 h-7 flex items-center border-[1px] border-primaryColor/25 justify-center bg-windowBackgroundColor rounded-[5px] text-sm font-bold"
-    : "w-7 h-7 flex items-center border-[1px] shadow-sm border-primaryColor justify-center bg-primaryColor/10 rounded-[5px] text-sm font-bold";
+    ? "w-7 h-7 flex items-center border-[1px] border-primaryColor/25 justify-center bg-windowBackgroundColor rounded-[5px] text-xs font-bold"
+    : "w-7 h-7 flex items-center border-[1px] shadow-sm border-primaryColor justify-center bg-primaryColor/10 rounded-[5px] text-xs font-bold";
 
   return (
     <button

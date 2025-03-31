@@ -64,7 +64,7 @@ export const DesktopIcon: React.FC<DesktopIconProps> = ({
       onDoubleClick={onDoubleClick}
     >
       <div className="text-primaryColor">{icon}</div>
-      <span className="text-primaryColor break-words rounded bg-white/0 px-1 text-center text-sm font-medium">
+      <span className="text-primaryColor break-words rounded bg-white/0 px-1 text-center text-xs font-medium">
         {label}
       </span>
     </div>

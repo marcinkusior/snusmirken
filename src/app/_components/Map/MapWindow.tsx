@@ -30,6 +30,7 @@ export const MapWindow = ({ posts }: { posts: Post[] }) => {
       minimize={minimizeMap}
       isMinimized={isMinimized}
       taskbarButtonId="map-taskbar-button"
+      padding={0}
     >
       <MapComponent
         setFlyToCoordinates={setFlyToCoordinates}
