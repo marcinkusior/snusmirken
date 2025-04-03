@@ -169,7 +169,7 @@ export const BasicWindow = ({
       >
         <span className="flex items-center gap-3 truncate">
           {icon}
-          {title}
+          <span className="text-sm">{title}</span>
         </span>
         <div className="window-controls flex items-center space-x-2">
           <FontAwesomeIcon

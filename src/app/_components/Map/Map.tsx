@@ -12,6 +12,8 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { PostFormValues } from "~/app/_types/PostFormValues";
 import { useRef } from "react";
 import { map } from "zod";
+import FileMenu from "~/components/FileMenu/FileMenu";
+import { useMapWindowStore } from "~/app/stores/mapWindowStore";
 
 export type FlyToCoordinatesFunction = ({
   latitude,
@@ -109,6 +111,8 @@ export const MapComponent = ({
   const [selectedPost, setSelectedPost] = React.useState<number | null>(null);
   const lineCoordinates = posts.map((post) => [post.longitude, post.latitude]);
 
+  const closeMap = useMapWindowStore((state) => state.close);
+
   const geojson = {
     type: "FeatureCollection",
     features: [
@@ -122,61 +126,93 @@ export const MapComponent = ({
     ],
   };
 
+  const menus = [
+    {
+      label: "Program",
+      options: [{ label: "Exit", action: closeMap }],
+    },
+    {
+      label: "Location",
+      options: [
+        {
+          label: `Tokyo`,
+          action: () => {},
+        },
+        {
+          label: `Kawaguchiko`,
+          action: () => {},
+        },
+        {
+          label: `Kamakura`,
+          action: () => {},
+        },
+      ],
+    },
+  ];
+
   return (
-    <Map
-      ref={mapRef}
-      initialViewState={{
-        longitude,
-        latitude,
-        zoom: 14,
-      }}
-      style={{ width: "100%", height: "100%" }}
-      mapStyle="https://tiles.openfreemap.org/styles/positron"
-    >
-      <AutoFitBounds posts={posts} />
-      <FlyToLocation setFlyToCoordinates={setFlyToCoordinates} />
+    <div className="h-[100%] w-[100%]">
+      <div className="relative z-10">
+        <FileMenu menus={menus} />
+      </div>
 
-      <Source id="line-source" type="geojson" data={geojson}>
-        <Layer
-          id="line-layer"
-          type="line"
-          source="line-source"
-          layout={{
-            "line-join": "round",
-            "line-cap": "round",
+      <div className="h-[calc(100%-30px)] w-[100%]">
+        <Map
+          ref={mapRef}
+          initialViewState={{
+            longitude,
+            latitude,
+            zoom: 14,
           }}
-          paint={{
-            "line-color": "salmon",
-            "line-width": 4,
-          }}
-        />
-      </Source>
-
-      {posts.map((post, index) => (
-        <Marker
-          key={index}
-          longitude={post.longitude}
-          latitude={post.latitude}
-          onClick={() => setSelectedPost(index)}
+          style={{ width: "100%", height: "100%" }}
+          mapStyle="https://tiles.openfreemap.org/styles/positron"
         >
-          {markerSvg}
+          <AutoFitBounds posts={posts} />
+          <FlyToLocation setFlyToCoordinates={setFlyToCoordinates} />
 
-          {selectedPost === index && (
-            <Popup
-              latitude={post.latitude!}
-              longitude={post.longitude!}
-              onClose={() => setSelectedPost(null)}
-              closeOnClick={false}
+          <Source id="line-source" type="geojson" data={geojson}>
+            <Layer
+              id="line-layer"
+              type="line"
+              source="line-source"
+              layout={{
+                "line-join": "round",
+                "line-cap": "round",
+              }}
+              paint={{
+                "line-color": "salmon",
+                "line-width": 4,
+              }}
+            />
+          </Source>
+
+          {posts.map((post, index) => (
+            <Marker
+              key={index}
+              longitude={post.longitude}
+              latitude={post.latitude}
+              onClick={() => setSelectedPost(index)}
             >
-              <div>
-                <h3>{post.name}</h3>
-                <p>Latitude: {post.latitude}</p>
-                <p>Longitude: {post.longitude}</p>
-              </div>
-            </Popup>
-          )}
-        </Marker>
-      ))}
-    </Map>
+              {markerSvg}
+
+              {selectedPost === index && (
+                <Popup
+                  latitude={post.latitude!}
+                  longitude={post.longitude!}
+                  onClose={() => setSelectedPost(null)}
+                  closeOnClick={false}
+                >
+                  <div>
+                    <h3>{post.name}</h3>
+                    <p>Latitude: {post.latitude}</p>
+                    <p>Longitude: {post.longitude}</p>
+                  </div>
+                </Popup>
+              )}
+            </Marker>
+          ))}
+        </Map>
+      </div>
+    </div>
   );
 };

@@ -5,6 +5,13 @@ import { Cell, GameState } from "./types";
 import { Header } from "./Header";
 import { Board } from "./Board";
 import FileMenu from "../FileMenu/FileMenu";
+import { useMinesweepurrrWindowStore } from "~/app/stores/minesweepurrrWindowStore";
+
+const DIFFICULTY_LEVEL = {
+  beginner: { rows: 9, cols: 9, mines: 10 },
+  intermediate: { rows: 12, cols: 12, mines: 22 },
+  advanced: { rows: 16, cols: 16, mines: 40 },
+};
 
 export const Minesweeper = () => {
   const [board, setBoard] = useState<Cell[][]>([]);
@@ -12,9 +19,18 @@ export const Minesweeper = () => {
   const [timeElapsed, setTimeElapsed] = useState(0);
   const [firstClick, setFirstClick] = useState(true);
   const [intervalId, setIntervalId] = useState<number | null>(null);
+  const [difficultyLevel, setDifficultyLevel] = useState("beginner");
+
+  const closeMinesweeper = useMinesweepurrrWindowStore((state) => state.close);
 
   const initializeGame = useCallback(() => {
-    const newBoard = generateBoard(11, 11, 21);
+    const difficultySpecs = DIFFICULTY_LEVEL[difficultyLevel];
+
+    const newBoard = generateBoard(
+      difficultySpecs.rows,
+      difficultySpecs.cols,
+      difficultySpecs.mines,
+    );
     setBoard(newBoard);
     setGameState("playing");
     setTimeElapsed(0);
@@ -23,7 +39,7 @@ export const Minesweeper = () => {
       clearInterval(intervalId);
       setIntervalId(null);
     }
-  }, [intervalId]);
+  }, [difficultyLevel, intervalId]);
 
   useEffect(() => {
     initializeGame();
@@ -31,6 +47,10 @@ export const Minesweeper = () => {
       if (intervalId) clearInterval(intervalId);
     };
   }, []);
+
+  useEffect(() => {
+    initializeGame();
+  }, [difficultyLevel]);
 
   const handleCellClick = useCallback(
     (row: number, col: number) => {
@@ -90,32 +110,50 @@ export const Minesweeper = () => {
         }
       });
     });
-    return 10 - result;
+
+    return DIFFICULTY_LEVEL[difficultyLevel].mines - result;
   }, [board]);
 
   const menus = [
     {
-      label: "File",
+      label: "Game",
       options: [
-        { label: "New", action: () => console.log("New File") },
-        { label: "Open", action: () => console.log("Open File") },
-        { label: "Save", action: () => console.log("Save File") },
+        { label: "New Game", action: initializeGame },
+        { label: "Exit", action: () => closeMinesweeper() },
       ],
     },
     {
-      label: "Edit",
+      label: "Difficulty",
       options: [
-        { label: "Undo", action: () => console.log("Undo") },
-        { label: "Redo", action: () => console.log("Redo") },
+        {
+          label: `Beginner ${difficultyLevel === "beginner" ? "✔" : ""}`,
+          action: () => {
+            setDifficultyLevel("beginner");
+          },
+        },
+        {
+          label: `Intermediate ${difficultyLevel === "intermediate" ? "✔" : ""}`,
+          action: () => {
+            setDifficultyLevel("intermediate");
+          },
+        },
+        {
+          label: `Advanced ${difficultyLevel === "advanced" ? "✔" : ""}`,
+          action: () => {
+            setDifficultyLevel("advanced");
+          },
+        },
       ],
     },
   ];
 
   return (
     <div>
-      <FileMenu menus={menus} />
+      <div className="relative z-10">
+        <FileMenu menus={menus} />
+      </div>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center p-2">
         <div className="border-b-[3px] border-l-[3px] border-r-[3px] border-t-[3px] border-windowBackgroundColor">
           <div className="bg-windowBackgroundColor p-2">
             <Header

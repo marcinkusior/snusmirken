@@ -22,8 +22,8 @@ export const MapWindow = ({ posts }: { posts: Post[] }) => {
   return (
     <Window
       title="Map.exe"
-      defaultPosition={{ x: 35, y: 100 }}
-      defaultSize={{ width: 400, height: 440 }}
+      defaultPosition={{ x: 100, y: 100 }}
+      defaultSize={{ width: 600, height: 440 }}
       onClose={() => closeMap()}
       icon={<MapIcon size={22} strokeWidth={2} fill="white" />}
       isOpen={isMapOpen}

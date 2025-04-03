@@ -71,7 +71,7 @@ export const TaskbarButton = ({
           onClick={onClick}
         >
           <div className="flex-shrink-0">{icon}</div>
-          <div className="taskbar-button__text text-borderColor text-xs">
+          <div className="taskbar-button__text text-xs text-borderColor">
             {text}
           </div>
         </div>

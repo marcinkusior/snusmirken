@@ -20,7 +20,7 @@
 }
 
 .taskbar-button--pushed {
-  background-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
+  background-color: color-mix(in srgb, var(--border-color) 10%, transparent);
 }
 
 .taskbar-button__text {

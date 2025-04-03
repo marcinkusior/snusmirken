@@ -54,8 +54,8 @@ export const ActivePrograms = () => {
           <MapIcon
             size={16}
             strokeWidth={2}
-            fill="var(--primary-color)"
-            stroke="var(--primary-color)"
+            fill="var(--border-color)"
+            stroke="var(--border-color)"
           />
         }
         text="Map.exe"
@@ -71,8 +71,8 @@ export const ActivePrograms = () => {
           <Bomb
             size={16}
             strokeWidth={2}
-            fill="var(--primary-color)"
-            stroke="var(--primary-color)"
+            fill="var(--border-color)"
+            stroke="var(--border-color)"
           />
         }
         text="Minesweepurrr.exe"
@@ -88,8 +88,8 @@ export const ActivePrograms = () => {
           <Folder
             size={16}
             strokeWidth={2}
-            fill="var(--primary-color)"
-            stroke="var(--primary-color)"
+            fill="var(--border-color)"
+            stroke="var(--border-color)"
           />
         }
         text={selectedTripFragment?.name ?? ""}

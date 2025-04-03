@@ -1,6 +1,6 @@
 /*  2 */
 :root {
-  --primary-color: #272727;
+  --primary-color: salmon;
   --border-color: #272727;
   --background-color: rgb(255, 254, 246);
   --window-shadow-color: #272727;
@@ -15,16 +15,8 @@
   --window-background-color: salmon;
 }
 
-.map-window-card {
-  --window-background-color: #272727;
-}
-
 .map-window-card .window-header {
   --window-background-color: salmon;
-}
-
-.photo-finder-window-card {
-  /* --window-background-color: #272727; */
 }
 
 .photo-finder-window-card .window-header {

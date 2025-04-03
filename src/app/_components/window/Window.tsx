@@ -185,6 +185,7 @@ export const Window = ({
   return (
     <div
       onMouseDown={() => {
+        console.log("onMouseDown");
         zIndexCounter.increment();
         setZIndex(zIndexCounter.get());
       }}
@@ -203,13 +204,13 @@ export const Window = ({
       }}
     >
       <div
-        className="window-header border-borderColor text-borderColor flex h-10 cursor-move items-center justify-between border-b-[4px] bg-windowBackgroundColor px-4"
+        className="window-header flex h-10 cursor-move items-center justify-between border-b-[4px] border-borderColor bg-windowBackgroundColor px-4 text-borderColor"
         onMouseDown={handleDragStart}
         onDoubleClick={handleMaximize}
       >
         <span className="flex items-center gap-3 truncate">
           {icon}
-          {title}
+          <span className="text-sm">{title}</span>
         </span>
         <div className="window-controls flex items-center space-x-2">
           <FontAwesomeIcon
@@ -247,7 +248,7 @@ export const Window = ({
           className="absolute bottom-0 right-0 h-4 w-4 cursor-se-resize"
           onMouseDown={handleResizeStart}
         >
-          <div className="bg-borderColor absolute bottom-1 left-[3px] top-[-1px] h-[11px] w-[4px] rotate-45 rounded-full" />
+          <div className="absolute bottom-1 left-[3px] top-[-1px] h-[11px] w-[4px] rotate-45 rounded-full bg-borderColor" />
         </div>
       )}
     </div>

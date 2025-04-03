@@ -76,6 +76,7 @@ const TripPage = () => {
         className="mx-auto h-[100vh]"
       >
         <DesktopIcons />
+
         <div>
           <div className="minesweeper-window-card">
             <MinesweeperWindow />

@@ -1,8 +1,6 @@
 .window {
-  border: 2px solid var(--primary-color);
-  box-shadow:
-    var(--window-shadow-color) 5.8px 5.8px 0px 0px,
-    var(--background-color) -1.2px -1.2px 0px 0px;
+  border: 2px solid var(--border-color);
+  box-shadow: var(--window-shadow-color) 5.8px 5.8px 0px 0px;
   background: var(--window-background-color);
   position: absolute;
 
@@ -16,11 +14,11 @@
 }
 
 .shadow-bl {
-  box-shadow: var(--primary-color) 5.8px 5.8px 0px 0px;
+  box-shadow: var(--border-color) 5.8px 5.8px 0px 0px;
 }
 
 .shadow-sm {
-  box-shadow: var(--primary-color) 1.3px 1.3px 0px 0px;
+  box-shadow: var(--border-color) 1.3px 1.3px 0px 0px;
 }
 
 .window-expand {
