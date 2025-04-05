@@ -1,9 +1,9 @@
 /*  2 */
 :root {
   --primary-color: salmon;
-  --border-color: #272727;
+  --border-color: #1e1d1d;
   --background-color: rgb(255, 254, 246);
-  --window-shadow-color: #272727;
+  --window-shadow-color: #1e1d1d;
   --window-background-color: white;
 }
 
@@ -21,4 +21,8 @@
 
 .photo-finder-window-card .window-header {
   --window-background-color: salmon;
+}
+
+.map-photo-display {
+  --window-background-color: ;
 }

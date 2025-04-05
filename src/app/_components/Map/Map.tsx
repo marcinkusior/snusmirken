@@ -10,10 +10,11 @@ import Map, {
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { PostFormValues } from "~/app/_types/PostFormValues";
-import { useRef } from "react";
+import { useRef, useCallback } from "react";
 import { map } from "zod";
 import FileMenu from "~/components/FileMenu/FileMenu";
 import { useMapWindowStore } from "~/app/stores/mapWindowStore";
+import { MapAndGallery } from "./MapAndGallery";
 
 export type FlyToCoordinatesFunction = ({
   latitude,
@@ -40,11 +41,13 @@ const markerSvg = (
   </svg>
 );
 
-export const AutoFitBounds = ({ posts }) => {
+export const AutoFitBounds = ({ posts }: { posts: PostFormValues[] }) => {
   const { current: map } = useMap();
 
   const onClick = () => {
-    map.flyTo({ center: [-122.4, 37.8], zoom: 10 });
+    if (map) {
+      map.flyTo({ center: [-122.4, 37.8], zoom: 10 });
+    }
   };
 
   React.useEffect(() => {
@@ -60,7 +63,7 @@ export const AutoFitBounds = ({ posts }) => {
         duration: 0,
       });
     }
-  }, [posts]);
+  }, [posts, map]);
 
   return <button onClick={onClick}>FLYYY</button>;
 };
@@ -72,24 +75,13 @@ export const FlyToLocation = ({
 }) => {
   const { current: map } = useMap();
 
-  const flyToCoordinates = React.useCallback(
-    ({ latitude, longitude }: { latitude: number; longitude: number }) => {
-      map?.flyTo({
-        center: [longitude, latitude],
-        zoom: 12,
-        duration: 1600,
-        curve: 0.84,
-        // easing: (t: number): number => {
-        //   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-        // },
-      });
-    },
-    [],
-  );
-
   React.useEffect(() => {
-    setFlyToCoordinates(() => flyToCoordinates);
-  }, [setFlyToCoordinates]);
+    if (map) {
+      setFlyToCoordinates(({ latitude, longitude }) => {
+        map.flyTo({ center: [longitude, latitude], zoom: 14 });
+      });
+    }
+  }, [map, setFlyToCoordinates]);
 
   return null;
 };
@@ -99,120 +91,101 @@ export const MapComponent = ({
   longitude,
   posts,
   setFlyToCoordinates,
+  onVisiblePostsChange,
 }: {
   latitude: number;
   longitude: number;
   posts: PostFormValues[];
   setFlyToCoordinates: (flyToCoordinate: FlyToCoordinatesFunction) => void;
+  onVisiblePostsChange?: (visiblePosts: PostFormValues[]) => void;
 }) => {
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MapRef | null>(null);
-
   const [selectedPost, setSelectedPost] = React.useState<number | null>(null);
   const lineCoordinates = posts.map((post) => [post.longitude, post.latitude]);
 
-  const closeMap = useMapWindowStore((state) => state.close);
-
   const geojson = {
-    type: "FeatureCollection",
+    type: "FeatureCollection" as const,
     features: [
       {
-        type: "Feature",
+        type: "Feature" as const,
+        properties: {},
         geometry: {
-          type: "LineString",
+          type: "LineString" as const,
           coordinates: lineCoordinates,
         },
       },
     ],
   };
 
-  const menus = [
-    {
-      label: "Program",
-      options: [{ label: "Exit", action: closeMap }],
-    },
-    {
-      label: "Location",
-      options: [
-        {
-          label: `Tokyo`,
-          action: () => {},
-        },
-        {
-          label: `Kawaguchiko`,
-          action: () => {},
-        },
-        {
-          label: `Kamakura`,
-          action: () => {},
-        },
-      ],
-    },
-  ];
+  const updateVisiblePosts = useCallback(() => {
+    if (!mapRef.current || !onVisiblePostsChange) return;
+
+    const bounds = mapRef.current.getBounds();
+    const visiblePosts = posts.filter((post: PostFormValues) => {
+      const lngLat = new maplibregl.LngLat(post.longitude, post.latitude);
+      return bounds.contains(lngLat);
+    });
+
+    onVisiblePostsChange(visiblePosts);
+  }, [posts, onVisiblePostsChange]);
 
   return (
-    <div className="h-[100%] w-[100%]">
-      <div className="relative z-10">
-        <FileMenu menus={menus} />
-      </div>
+    <Map
+      ref={mapRef}
+      initialViewState={{
+        longitude,
+        latitude,
+        zoom: 14,
+      }}
+      style={{ width: "100%", height: "100%" }}
+      mapStyle="https://tiles.openfreemap.org/styles/positron"
+      onMoveEnd={updateVisiblePosts}
+      onZoomEnd={updateVisiblePosts}
+    >
+      <AutoFitBounds posts={posts} />
+      <FlyToLocation setFlyToCoordinates={setFlyToCoordinates} />
 
-      <div className="h-[calc(100%-30px)] w-[100%]">
-        <Map
-          ref={mapRef}
-          initialViewState={{
-            longitude,
-            latitude,
-            zoom: 14,
+      <Source id="line-source" type="geojson" data={geojson}>
+        <Layer
+          id="line-layer"
+          type="line"
+          source="line-source"
+          layout={{
+            "line-join": "round",
+            "line-cap": "round",
           }}
-          style={{ width: "100%", height: "100%" }}
-          mapStyle="https://tiles.openfreemap.org/styles/positron"
+          paint={{
+            "line-color": "salmon",
+            "line-width": 4,
+          }}
+        />
+      </Source>
+
+      {posts.map((post, index) => (
+        <Marker
+          key={index}
+          longitude={post.longitude}
+          latitude={post.latitude}
+          onClick={() => setSelectedPost(index)}
         >
-          <AutoFitBounds posts={posts} />
-          <FlyToLocation setFlyToCoordinates={setFlyToCoordinates} />
+          {markerSvg}
 
-          <Source id="line-source" type="geojson" data={geojson}>
-            <Layer
-              id="line-layer"
-              type="line"
-              source="line-source"
-              layout={{
-                "line-join": "round",
-                "line-cap": "round",
-              }}
-              paint={{
-                "line-color": "salmon",
-                "line-width": 4,
-              }}
-            />
-          </Source>
-
-          {posts.map((post, index) => (
-            <Marker
-              key={index}
-              longitude={post.longitude}
+          {selectedPost === index && (
+            <Popup
               latitude={post.latitude}
-              onClick={() => setSelectedPost(index)}
+              longitude={post.longitude}
+              onClose={() => setSelectedPost(null)}
+              closeOnClick={false}
             >
-              {markerSvg}
-
-              {selectedPost === index && (
-                <Popup
-                  latitude={post.latitude!}
-                  longitude={post.longitude!}
-                  onClose={() => setSelectedPost(null)}
-                  closeOnClick={false}
-                >
-                  <div>
-                    <h3>{post.name}</h3>
-                    <p>Latitude: {post.latitude}</p>
-                    <p>Longitude: {post.longitude}</p>
-                  </div>
-                </Popup>
-              )}
-            </Marker>
-          ))}
-        </Map>
-      </div>
-    </div>
+              <div>
+                <h3>{post.name}</h3>
+                <p>Latitude: {post.latitude}</p>
+                <p>Longitude: {post.longitude}</p>
+              </div>
+            </Popup>
+          )}
+        </Marker>
+      ))}
+    </Map>
   );
 };

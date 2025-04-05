@@ -8,8 +8,9 @@ import { Window } from "../window/Window";
 import { useMapWindowStore } from "~/app/stores/mapWindowStore";
 import React from "react";
 import { MapIcon } from "lucide-react";
+import { MapAndGallery } from "./MapAndGallery";
 
-export const MapWindow = ({ posts }: { posts: Post[] }) => {
+export const MapWindow = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
     React.useState<FlyToCoordinatesFunction>();
 
@@ -32,12 +33,13 @@ export const MapWindow = ({ posts }: { posts: Post[] }) => {
       taskbarButtonId="map-taskbar-button"
       padding={0}
     >
-      <MapComponent
+      {/* <MapComponent
         setFlyToCoordinates={setFlyToCoordinates}
         posts={posts}
         latitude={35.30889}
         longitude={139.55028}
-      />
+      /> */}
+      <MapAndGallery />
     </Window>
   );
 };

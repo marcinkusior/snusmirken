@@ -216,21 +216,21 @@ export const Window = ({
           <FontAwesomeIcon
             onClick={handleMinimize}
             icon={faWindowMinimize}
-            className="cursor-pointer hover:opacity-70"
+            className="cursor-pointer hover:opacity-60"
             size="lg"
           />
 
           <FontAwesomeIcon
             onClick={handleMaximize}
             icon={faWindowMaximize}
-            className="cursor-pointer hover:opacity-70"
+            className="cursor-pointer hover:opacity-60"
             size="lg"
           />
 
           <FontAwesomeIcon
             onClick={handleClose}
             icon={faXmark}
-            className="cursor-pointer hover:opacity-70"
+            className="cursor-pointer hover:opacity-60"
             size="xl"
           />
         </div>

@@ -51,22 +51,6 @@ const TripPage = () => {
       enabled: !!tripId,
     });
 
-  const onPostClick = (post: Post) => {
-    flyToCoordinates?.({
-      latitude: post.latitude,
-      longitude: post.longitude,
-    });
-  };
-
-  if (isLoading) return <Loading />;
-  if (error) return <div>Error: {error.message}</div>;
-
-  const updatTripFragment = (tripFragmentid: TripFragment) => {
-    setSelectedTripFragment((prev) =>
-      prev?.id === tripFragmentid.id ? null : tripFragmentid,
-    );
-  };
-
   return (
     <>
       <div
@@ -82,7 +66,7 @@ const TripPage = () => {
             <MinesweeperWindow />
           </div>
           <div className="map-window-card">
-            <MapWindow posts={posts} />
+            <MapWindow />
           </div>
           <div className="photo-finder-window-card">
             <PhotoFinderWindow />

@@ -1,4 +1,4 @@
-import { Bomb, Folder, MapIcon } from "lucide-react";
+import { Bomb, FileIcon, Folder, MapIcon } from "lucide-react";
 import { DesktopIcon } from "./DesktopIcon";
 import { useParams } from "next/navigation";
 import { useMapWindowStore } from "~/app/stores/mapWindowStore";
@@ -6,6 +6,7 @@ import { usePhotoFinderStore } from "~/app/stores/photoFinderStore";
 import { api } from "~/trpc/react";
 import { TripFragment } from "@prisma/client";
 import { useMinesweepurrrWindowStore } from "~/app/stores/minesweepurrrWindowStore";
+import { FolderIcon } from "~/components/icons/FolderIcon";
 
 const useDesktopIcons = (tripFragments: TripFragment[]) => {
   const openMap = useMapWindowStore((state) => state.open);
@@ -34,7 +35,7 @@ const useDesktopIcons = (tripFragments: TripFragment[]) => {
 
     {
       name: "Minesweepurrr.exe",
-      icon: <Bomb size={60} strokeWidth={1.5} fill="white" />,
+      icon: <FileIcon size={70} fill="white" strokeWidth={1} />,
       onDoubleClick: () => {
         openMinesweepurrr();
         unMinimizeMinesweepurrr();
@@ -43,7 +44,8 @@ const useDesktopIcons = (tripFragments: TripFragment[]) => {
 
     ...tripFragments.map((tripFragment) => ({
       name: tripFragment.name,
-      icon: <Folder size={60} strokeWidth={1.5} fill="white" />,
+      // icon: <Folder size={60} strokeWidth={1.5} fill="white" />,
+      icon: <FolderIcon />,
       onDoubleClick: () => {
         openPhotoFinder();
         unMinimizePhotoFinder();

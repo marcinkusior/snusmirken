@@ -1,5 +1,5 @@
 .cell {
-  transition: all 0.2s cubic-bezier(0.5, 1, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.5, 1, 0.2, 1);
 }
 
 .cell:active {
@@ -7,7 +7,7 @@
 }
 
 .box-shadow-none {
-  transition: all 0.2s cubic-bezier(0.5, 1, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.5, 1, 0.2, 1);
 }
 .box-shadow-none:active {
   box-shadow: none;
