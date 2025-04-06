@@ -47,8 +47,6 @@ export const BasicWindow = ({
     if (taskbarButton) {
       const rect = taskbarButton.getBoundingClientRect();
 
-      console.log(rect);
-
       // const x = rect.x + rect.width / 2 - size.width / 2;
       // const y = rect.y + rect.height / 2 - size.height / 2;
 
@@ -164,7 +162,7 @@ export const BasicWindow = ({
       }}
     >
       <div
-        className="window-header border-borderColor text-borderColor flex h-10 cursor-move items-center justify-between border-b-[4px] bg-windowBackgroundColor px-4"
+        className="window-header flex h-10 cursor-move items-center justify-between border-b-[4px] border-borderColor bg-windowBackgroundColor px-4 text-borderColor"
         onMouseDown={handleDragStart}
       >
         <span className="flex items-center gap-3 truncate">

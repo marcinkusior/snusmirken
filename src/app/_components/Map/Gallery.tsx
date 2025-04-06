@@ -1,17 +1,35 @@
 import { PostFormValues } from "~/app/_types/PostFormValues";
+import cx from "classnames";
 
-export const Gallery: React.FC<{ posts: PostFormValues[] }> = ({ posts }) => {
+export const Gallery: React.FC<{
+  posts: PostFormValues[];
+  visiblePostsIds: string[];
+}> = ({ posts, visiblePostsIds }) => {
   return (
-    <div className="flex flex-row flex-wrap items-center justify-center gap-y-5 overflow-y-scroll bg-windowBackgroundColor py-3">
+    <div
+      className={cx(
+        "flex flex-row flex-wrap items-center justify-center gap-y-5",
+        "overflow-y-scroll bg-windowBackgroundColor py-3",
+      )}
+    >
       {posts.map((post, index) => (
         <div
-          className="flex-grow-1 flex flex-col items-center justify-center"
-          key={index}
+          className={cx(
+            "flex-grow-1",
+            "flex flex-col items-center justify-center",
+            {
+              hidden: !visiblePostsIds.includes(post.id),
+            },
+          )}
+          key={post.name}
         >
           <img
             height={20}
             width={"88%"}
-            className="photo-img max-w-[200px] overflow-hidden rounded-[4px]"
+            className={cx(
+              "photo-img",
+              "max-w-[200px] overflow-hidden rounded-[4px]",
+            )}
             src={post.imageUrl}
             alt=""
           />

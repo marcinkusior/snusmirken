@@ -9,6 +9,7 @@ import { Gallery } from "./Gallery";
 
 export const MapAndGallery = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [visiblePostsIds, setVisiblePostsIds] = useState<string[]>([]);
 
   const { id: tripId } = useParams();
 
@@ -21,8 +22,6 @@ export const MapAndGallery = () => {
   });
 
   const closeMap = useMapWindowStore((state) => state.close);
-
-  console.log("posts", posts);
 
   const menus = [
     {
@@ -55,19 +54,28 @@ export const MapAndGallery = () => {
       </div>
 
       <div className="flex h-[calc(100%-34px)] flex-row" ref={containerRef}>
-        <SplitPane
+        <MapComponent
+          posts={posts}
+          onVisiblePostsChange={setVisiblePostsIds}
+          latitude={35.30889}
+          longitude={139.55028}
+          setFlyToCoordinates={() => {}}
+        />
+
+        {/* <SplitPane
           initialLeftWidth={450}
           left={
             <MapComponent
               posts={posts}
+              onVisiblePostsChange={setVisiblePostsIds}
               latitude={35.30889}
               longitude={139.55028}
               setFlyToCoordinates={() => {}}
             />
           }
-          right={<Gallery posts={posts} />}
+          // right={<Gallery visiblePostsIds={visiblePostsIds} posts={posts} />}
           containerRef={containerRef}
-        />
+        /> */}
       </div>
     </div>
   );

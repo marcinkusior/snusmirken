@@ -15,6 +15,8 @@ import { map } from "zod";
 import FileMenu from "~/components/FileMenu/FileMenu";
 import { useMapWindowStore } from "~/app/stores/mapWindowStore";
 import { MapAndGallery } from "./MapAndGallery";
+import "./Map.css";
+import cx from "classnames";
 
 export type FlyToCoordinatesFunction = ({
   latitude,
@@ -97,10 +99,11 @@ export const MapComponent = ({
   longitude: number;
   posts: PostFormValues[];
   setFlyToCoordinates: (flyToCoordinate: FlyToCoordinatesFunction) => void;
-  onVisiblePostsChange?: (visiblePosts: PostFormValues[]) => void;
+  onVisiblePostsChange?: React.Dispatch<React.SetStateAction<string[]>>;
 }) => {
   const mapRef = useRef<MapRef | null>(null);
-  const [selectedPost, setSelectedPost] = React.useState<number | null>(null);
+  const [selectedPost, setSelectedPost] = React.useState<string | null>(null);
+  const [currentZoom, setCurrentZoom] = React.useState<number>(14);
   const lineCoordinates = posts.map((post) => [post.longitude, post.latitude]);
 
   const geojson = {
@@ -118,74 +121,78 @@ export const MapComponent = ({
   };
 
   const updateVisiblePosts = useCallback(() => {
-    if (!mapRef.current || !onVisiblePostsChange) return;
+    // if (!mapRef.current || !onVisiblePostsChange) return;
 
     const bounds = mapRef.current.getBounds();
-    const visiblePosts = posts.filter((post: PostFormValues) => {
-      const lngLat = new maplibregl.LngLat(post.longitude, post.latitude);
-      return bounds.contains(lngLat);
-    });
+    const visiblePosts = posts
+      .filter((post: PostFormValues) => {
+        const lngLat = new maplibregl.LngLat(post.longitude, post.latitude);
+        return bounds.contains(lngLat);
+      })
+      .map((post) => post.id);
 
     onVisiblePostsChange(visiblePosts);
   }, [posts, onVisiblePostsChange]);
 
+  const onZoomChange = () => {
+    console.log("zoomie");
+    setCurrentZoom(mapRef.current?.getZoom());
+    updateVisiblePosts();
+  };
+
   return (
-    <Map
-      ref={mapRef}
-      initialViewState={{
-        longitude,
-        latitude,
-        zoom: 14,
-      }}
-      style={{ width: "100%", height: "100%" }}
-      mapStyle="https://tiles.openfreemap.org/styles/positron"
-      onMoveEnd={updateVisiblePosts}
-      onZoomEnd={updateVisiblePosts}
-    >
-      <AutoFitBounds posts={posts} />
-      <FlyToLocation setFlyToCoordinates={setFlyToCoordinates} />
+    <div className="relative h-full w-full">
+      <Map
+        ref={mapRef}
+        initialViewState={{
+          longitude,
+          latitude,
+          zoom: 14,
+        }}
+        style={{ width: "100%", height: "100%" }}
+        mapStyle="https://tiles.openfreemap.org/styles/positron"
+        onMoveEnd={onZoomChange}
+        onZoom={onZoomChange}
+        className="relative"
+      >
+        <AutoFitBounds posts={posts} />
+        <FlyToLocation setFlyToCoordinates={setFlyToCoordinates} />
 
-      <Source id="line-source" type="geojson" data={geojson}>
-        <Layer
-          id="line-layer"
-          type="line"
-          source="line-source"
-          layout={{
-            "line-join": "round",
-            "line-cap": "round",
-          }}
-          paint={{
-            "line-color": "salmon",
-            "line-width": 4,
-          }}
-        />
-      </Source>
+        {posts.map((post, index) => (
+          <Popup
+            key={post.id}
+            latitude={post.latitude}
+            longitude={post.longitude}
+            closeOnClick={false}
+            anchor="bottom"
+          >
+            <div onClick={() => setSelectedPost(post.imageUrl)}>
+              <img
+                className={cx("map-image", {
+                  "map-image__expand": currentZoom > 15,
+                })}
+                src={post.imageUrl}
+                alt=""
+              />
+            </div>
+          </Popup>
+        ))}
 
-      {posts.map((post, index) => (
-        <Marker
-          key={index}
-          longitude={post.longitude}
-          latitude={post.latitude}
-          onClick={() => setSelectedPost(index)}
-        >
-          {markerSvg}
-
-          {selectedPost === index && (
-            <Popup
-              latitude={post.latitude}
-              longitude={post.longitude}
-              onClose={() => setSelectedPost(null)}
-              closeOnClick={false}
-            >
-              <div>
-                <h3>{post.name}</h3>
-                <p>Latitude: {post.latitude}</p>
-                <p>Longitude: {post.longitude}</p>
-              </div>
-            </Popup>
-          )}
-        </Marker>
-      ))}
-    </Map>
+        {selectedPost && (
+          <div
+            onClick={() => {
+              setSelectedPost(null);
+            }}
+            className="absolute left-0 top-0 z-50 flex h-[calc(100%)] w-[100%] items-center justify-center overflow-hidden bg-black/20 p-5"
+          >
+            <img
+              className="imagge relative max-h-[100%] rounded-[16px]"
+              src={selectedPost}
+              alt=""
+            />
+          </div>
+        )}
+      </Map>
+    </div>
   );
 };

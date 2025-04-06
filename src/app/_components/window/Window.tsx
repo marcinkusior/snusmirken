@@ -55,8 +55,6 @@ export const Window = ({
     if (taskbarButton) {
       const rect = taskbarButton.getBoundingClientRect();
 
-      console.log(rect);
-
       const x = rect.x + rect.width / 2 - size.width / 2;
       const y = rect.y + rect.height / 2 - size.height / 2;
 
@@ -185,7 +183,6 @@ export const Window = ({
   return (
     <div
       onMouseDown={() => {
-        console.log("onMouseDown");
         zIndexCounter.increment();
         setZIndex(zIndexCounter.get());
       }}
