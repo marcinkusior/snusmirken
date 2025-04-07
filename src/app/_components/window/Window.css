@@ -21,6 +21,10 @@
   box-shadow: var(--border-color) 1.3px 1.3px 0px 0px;
 }
 
+.shadow-lg {
+  box-shadow: var(--border-color) 3.3px 3.3px 0px 0px;
+}
+
 .window-expand {
   transform: scale(1);
   opacity: 1;

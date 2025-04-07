@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import FileMenu from "~/components/FileMenu/FileMenu";
 import { useMapWindowStore } from "~/app/stores/mapWindowStore";
 import { Gallery } from "./Gallery";
+import { NewMapComponent } from "./NewMap";
 
 export const MapAndGallery = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -54,13 +55,15 @@ export const MapAndGallery = () => {
       </div>
 
       <div className="flex h-[calc(100%-34px)] flex-row" ref={containerRef}>
-        <MapComponent
+        {/* <MapComponent
           posts={posts}
           onVisiblePostsChange={setVisiblePostsIds}
           latitude={35.30889}
           longitude={139.55028}
           setFlyToCoordinates={() => {}}
-        />
+        /> */}
+
+        <NewMapComponent posts={posts} />
 
         {/* <SplitPane
           initialLeftWidth={450}

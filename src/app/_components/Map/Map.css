@@ -36,8 +36,11 @@
   overflow: hidden;
   border: 7px solid var(--primary-color);
 
-  width: 10px;
-  height: 10px;
+  width: 100px;
+  height: 100px;
+
+  /* width: 10px;
+  height: 10px; */
   transition:
     width 0.5s cubic-bezier(0.5, 1, 0.2, 1.07),
     height 0.5s cubic-bezier(0.5, 1, 0.2, 1.07);
@@ -46,13 +49,13 @@
 .maplibregl-popup:hover {
   z-index: 10;
 }
-
+/* 
 .maplibregl-popup:hover .map-image {
   width: 100px;
   height: 100px;
-}
-
+} */
+/* 
 .map-image__expand {
   width: 100px;
   height: 100px;
-}
+} */
