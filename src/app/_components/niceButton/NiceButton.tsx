@@ -6,12 +6,14 @@ export const NiceButton = ({
   onClick,
   fontSize,
   children,
+  borderWidth = "1.4px",
 }: {
   text: string;
   highlight: boolean;
   onClick: () => void;
   fontSize?: string;
   children?: React.ReactNode;
+  borderWidth?: string;
 }) => {
   return (
     <button
@@ -22,7 +24,9 @@ export const NiceButton = ({
     >
       {/* <span className="shadow"></span> */}
       <span className="edge"></span>
-      <span className="front"> {children}</span>
+      <span className="front" style={{ borderWidth }}>
+        {children}
+      </span>
     </button>
   );
 };

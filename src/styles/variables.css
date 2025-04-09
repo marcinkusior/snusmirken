@@ -11,6 +11,10 @@
   --window-background-color: white;
 }
 
+.window-header {
+  --window-background-color: salmon;
+}
+
 .minesweeper-window-card .window-header {
   --window-background-color: salmon;
 }

@@ -9,6 +9,7 @@ import {
   Menu,
 } from "lucide-react";
 import "./MusicPlayer.css";
+import { NiceButton } from "../niceButton/NiceButton";
 
 export const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -136,22 +137,6 @@ export const MusicPlayer = () => {
               </div>
             </div>
 
-            {/* Dancing Cat */}
-            {isPlaying && (
-              <div className="mt-4 flex justify-center">
-                <div className="dancing-cat">
-                  <div className="ear-l"></div>
-                  <div className="ear-r"></div>
-                  <div className="face">
-                    <div className="eye-l"></div>
-                    <div className="eye-r"></div>
-                    <div className="nose"></div>
-                    <div className="mouth"></div>
-                  </div>
-                </div>
-              </div>
-            )}
-
             {/* Progress Bar */}
             <div className="mt-4">
               <div className="lcd-pixel h-2 rounded-full">
@@ -175,18 +160,20 @@ export const MusicPlayer = () => {
             >
               <SkipBack className="stroke-[1.5]" size={24} />
             </button>
-            <button
+            {/* <button
               className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-black transition-colors hover:bg-black/5"
               onClick={togglePlay}
-            >
+            > */}
+            <NiceButton onClick={togglePlay} borderWidth="1.8px">
               {isPlaying ? (
-                <Pause className="stroke-[1.5]" size={24} />
+                <Pause className="m-2 stroke-[1.5]" size={24} />
               ) : (
-                <Play className="stroke-[1.5]" size={24} />
+                <Play className="m-2 stroke-[1.5]" size={24} />
               )}
-            </button>
+            </NiceButton>
+            {/* </button> */}
             <button
-              className="text-black transition-colors hover:text-black/70"
+              className="rounded-full border-[3px] border-transparent p-2 text-black transition-colors hover:border-primaryColor hover:text-black/70"
               onClick={handleNext}
             >
               <SkipForward className="stroke-[1.5]" size={24} />

@@ -36,7 +36,9 @@
   background: var(--border-color);
 }
 .front {
-  border: 1.4px solid var(--border-color);
+  border-color: var(--border-color);
+  border-style: solid;
+
   display: block;
   position: relative;
   /* padding: 8px 24px; */
