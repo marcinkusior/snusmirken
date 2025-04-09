@@ -11,11 +11,11 @@ export const tripFragmentRouter = createTRPCRouter({
   getByTripId: publicProcedure
     .input(z.number())
     .query(async ({ ctx, input }) => {
-      const posts = await ctx.db.tripFragment.findMany({
+      const tripFragments = await ctx.db.tripFragment.findMany({
         where: { tripId: input },
         orderBy: { createdAt: "asc" },
       });
 
-      return posts;
+      return tripFragments;
     }),
 });

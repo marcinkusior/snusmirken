@@ -15,6 +15,7 @@ import { MapWindow } from "~/app/_components/Map/MapWindow";
 import { DesktopIcons } from "~/app/_components/DesktopIcon/DesktopIcons";
 import { PhotoFinderWindow } from "~/app/_components/PhotoFinder/PhotoFinderWindow";
 import { MinesweeperWindow } from "~/components/minesweeper/MinesweeperWindow";
+import { MusicPlayerWindow } from "~/app/_components/MusicPlayer/MusicPlayerWindow";
 
 const TripPage = () => {
   const [flyToCoordinates, setFlyToCoordinates] =
@@ -70,6 +71,10 @@ const TripPage = () => {
           </div>
           <div className="photo-finder-window-card">
             <PhotoFinderWindow />
+          </div>
+
+          <div className="music-player-window-card">
+            <MusicPlayerWindow />
           </div>
         </div>
       </div>

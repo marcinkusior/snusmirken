@@ -43,33 +43,6 @@ const markerSvg = (
   </svg>
 );
 
-export const AutoFitBounds = ({ posts }: { posts: PostFormValues[] }) => {
-  const { current: map } = useMap();
-
-  const onClick = () => {
-    if (map) {
-      map.flyTo({ center: [-122.4, 37.8], zoom: 10 });
-    }
-  };
-
-  React.useEffect(() => {
-    if (map && posts.length > 0) {
-      const bounds = new maplibregl.LngLatBounds();
-
-      posts.forEach((post) => {
-        bounds.extend([post.longitude, post.latitude]);
-      });
-
-      map.fitBounds(bounds, {
-        padding: 20,
-        duration: 0,
-      });
-    }
-  }, [posts, map]);
-
-  return <button onClick={onClick}>FLYYY</button>;
-};
-
 export const FlyToLocation = ({
   setFlyToCoordinates,
 }: {

@@ -1,17 +1,10 @@
-import { MapIcon, Bomb, Folder } from "lucide-react";
+import { MapIcon, Bomb, Folder, Play } from "lucide-react";
 import { usePhotoFinderStore } from "~/app/stores/photoFinderStore";
 import { useMapWindowStore } from "~/app/stores/mapWindowStore";
 import { useMinesweepurrrWindowStore } from "~/app/stores/minesweepurrrWindowStore";
 import { TaskbarButton } from "./TaskbarButton";
 import { useEffect, useState } from "react";
-
-type Program = {
-  id: string;
-  icon: JSX.Element;
-  text: string;
-  onClick: () => void;
-  isMinimized: boolean;
-};
+import { useMusicPlayerWindowStore } from "~/app/stores/MusicPlayerWindowStore";
 
 let orderCounter = 0;
 
@@ -39,6 +32,14 @@ export const ActivePrograms = () => {
     (state) => state.isMinimized,
   );
   const toggleMinimizeMinesweepurrr = useMinesweepurrrWindowStore(
+    (state) => state.toggleMinimize,
+  );
+
+  const isMusicPlayerOpen = useMusicPlayerWindowStore((state) => state.isOpen);
+  const isMusicPlayerMinimized = useMusicPlayerWindowStore(
+    (state) => state.isMinimized,
+  );
+  const toggleMinimizeMusicPlayer = useMusicPlayerWindowStore(
     (state) => state.toggleMinimize,
   );
 
@@ -97,6 +98,23 @@ export const ActivePrograms = () => {
         isMinimized={isPhotoFinderMinimized}
         onClick={toggleMinimizePhotoFinder}
         id="photo-finder-taskbar-button"
+      />
+
+      <TaskbarButton
+        isOpen={isMusicPlayerOpen}
+        icon={
+          <Play
+            size={16}
+            strokeWidth={2}
+            fill="var(--border-color)"
+            stroke="var(--border-color)"
+          />
+        }
+        text="Music Player.exe"
+        order={orderCounter}
+        isMinimized={isMusicPlayerMinimized}
+        onClick={toggleMinimizeMusicPlayer}
+        id="music-player-taskbar-button"
       />
     </div>
   );

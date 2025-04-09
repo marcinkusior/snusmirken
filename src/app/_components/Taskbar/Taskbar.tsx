@@ -16,7 +16,7 @@ import { ActivePrograms } from "./ActivePrograms";
 
 function MenuItem({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
-    <div className="flex cursor-pointer items-center gap-3 rounded rounded-[20px] p-2 hover:bg-primaryColor">
+    <div className="nice-transition flex cursor-pointer items-center gap-3 rounded rounded-[20px] p-2 hover:bg-primaryColor">
       {icon}
       <span>{label}</span>
     </div>

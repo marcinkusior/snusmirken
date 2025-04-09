@@ -4,7 +4,7 @@
   background: var(--window-background-color);
   position: absolute;
 
-  transform: scale(0.2);
+  transform: scale(0.6);
   transition: all 0.55s cubic-bezier(0.5, 1, 0.2, 1);
   /* transition:
     transform 0.3s cubic-bezier(0.5, 1, 0.2, 1.13),

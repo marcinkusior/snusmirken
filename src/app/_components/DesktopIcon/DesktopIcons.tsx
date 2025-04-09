@@ -1,4 +1,4 @@
-import { Bomb, FileIcon, Folder, MapIcon } from "lucide-react";
+import { Bomb, FileIcon, Folder, MapIcon, Play } from "lucide-react";
 import { DesktopIcon } from "./DesktopIcon";
 import { useParams } from "next/navigation";
 import { useMapWindowStore } from "~/app/stores/mapWindowStore";
@@ -7,6 +7,7 @@ import { api } from "~/trpc/react";
 import { TripFragment } from "@prisma/client";
 import { useMinesweepurrrWindowStore } from "~/app/stores/minesweepurrrWindowStore";
 import { FolderIcon } from "~/components/icons/FolderIcon";
+import { useMusicPlayerWindowStore } from "~/app/stores/MusicPlayerWindowStore";
 
 const useDesktopIcons = (tripFragments: TripFragment[]) => {
   const openMap = useMapWindowStore((state) => state.open);
@@ -20,6 +21,11 @@ const useDesktopIcons = (tripFragments: TripFragment[]) => {
   const setSelectedTripFragment = usePhotoFinderStore().setSelectedTripFragment;
   const openMinesweepurrr = useMinesweepurrrWindowStore().open;
   const unMinimizeMinesweepurrr = useMinesweepurrrWindowStore(
+    (state) => state.unMinimize,
+  );
+
+  const openMusicPlayer = useMusicPlayerWindowStore().open;
+  const unMinimizeMusicPlayer = useMusicPlayerWindowStore(
     (state) => state.unMinimize,
   );
 
@@ -42,6 +48,14 @@ const useDesktopIcons = (tripFragments: TripFragment[]) => {
       },
     },
 
+    {
+      name: "Music Player.exe",
+      icon: <Play size={70} fill="white" strokeWidth={1} />,
+      onDoubleClick: () => {
+        openMusicPlayer();
+        unMinimizeMusicPlayer();
+      },
+    },
     ...tripFragments.map((tripFragment) => ({
       name: tripFragment.name,
       // icon: <Folder size={60} strokeWidth={1.5} fill="white" />,

@@ -7,10 +7,14 @@ import FileMenu from "~/components/FileMenu/FileMenu";
 import { useMapWindowStore } from "~/app/stores/mapWindowStore";
 import { Gallery } from "./Gallery";
 import { NewMapComponent } from "./NewMap";
+import { PostFormValues } from "~/app/_types/PostFormValues";
 
 export const MapAndGallery = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [visiblePostsIds, setVisiblePostsIds] = useState<string[]>([]);
+  const [selectedTripFragmentId, setSelectedTripFragmentId] = useState<
+    number | null
+  >(null);
 
   const { id: tripId } = useParams();
 
@@ -22,6 +26,10 @@ export const MapAndGallery = () => {
     enabled: !!tripId,
   });
 
+  const { data: tripFragments, isLoading: isLoadingTripFragments } =
+    api.tripFragment.getByTripId.useQuery(parseInt(tripId), {
+      enabled: !!tripId,
+    });
   const closeMap = useMapWindowStore((state) => state.close);
 
   const menus = [
@@ -31,20 +39,12 @@ export const MapAndGallery = () => {
     },
     {
       label: "Location",
-      options: [
-        {
-          label: `Tokyo`,
-          action: () => {},
+      options: tripFragments?.map((tripFragment) => ({
+        label: tripFragment.name,
+        action: () => {
+          setSelectedTripFragmentId(tripFragment.id);
         },
-        {
-          label: `Kawaguchiko`,
-          action: () => {},
-        },
-        {
-          label: `Kamakura`,
-          action: () => {},
-        },
-      ],
+      })),
     },
   ];
 
@@ -55,30 +55,10 @@ export const MapAndGallery = () => {
       </div>
 
       <div className="flex h-[calc(100%-34px)] flex-row" ref={containerRef}>
-        {/* <MapComponent
+        <NewMapComponent
+          selectedTripFragmentId={selectedTripFragmentId}
           posts={posts}
-          onVisiblePostsChange={setVisiblePostsIds}
-          latitude={35.30889}
-          longitude={139.55028}
-          setFlyToCoordinates={() => {}}
-        /> */}
-
-        <NewMapComponent posts={posts} />
-
-        {/* <SplitPane
-          initialLeftWidth={450}
-          left={
-            <MapComponent
-              posts={posts}
-              onVisiblePostsChange={setVisiblePostsIds}
-              latitude={35.30889}
-              longitude={139.55028}
-              setFlyToCoordinates={() => {}}
-            />
-          }
-          // right={<Gallery visiblePostsIds={visiblePostsIds} posts={posts} />}
-          containerRef={containerRef}
-        /> */}
+        />
       </div>
     </div>
   );
